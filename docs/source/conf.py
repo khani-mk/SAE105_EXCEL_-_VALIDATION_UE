@@ -16,7 +16,13 @@ author = 'Karim HANI Rémi Camelio'
 extensions = []
 
 templates_path = ['_templates']
-exclude_patterns = []
+exclude_patterns = [
+'sphinx.ext.todo',
+'sphinx.ext.mathjax',
+'sphinx.ext.ifconfig',
+'sphinx.ext.autodoc',
+'sphinx.ext.viewcode',
+]
 
 
 
