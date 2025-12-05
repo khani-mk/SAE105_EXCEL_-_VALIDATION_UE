@@ -1,6 +1,6 @@
 import openpyxl
 
-workbook = openpyxl.load_workbook('/home/khani/Téléchargements/excel_notes/notes_S1/Anglais_technique_1.xlsx', data_only = True)
+workbook = openpyxl.load_workbook('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1/Anglais_technique_1.xlsx', data_only = True)
 titres_onglets = workbook.sheetnames
 onglet1 = workbook[titres_onglets[0]]
 #Liste des lignes
