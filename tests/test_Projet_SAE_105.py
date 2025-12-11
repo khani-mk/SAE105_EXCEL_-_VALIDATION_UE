@@ -172,4 +172,3 @@ def genere_page_web( nom_fichier, titre, corps):
                 </html>
             
             """
-    genere_page_web("./index.html", "mon_titre", corps) 
