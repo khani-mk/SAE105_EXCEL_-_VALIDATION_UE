@@ -6,19 +6,25 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'SAE105_EXCEL_-_VALIDATION_UE'
-copyright = '2025, Karim HANI Rémi Camelio'
-author = 'Karim HANI Rémi Camelio'
+project = 'SAE105'
+copyright = '2025, Remi Karim'
+author = 'Remi Karim'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+'sphinx.ext.todo',
+'sphinx.ext.mathjax',
+'sphinx.ext.ifconfig',
+'sphinx.ext.autodoc',
+'sphinx.ext.viewcode',
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
 
-
+language = 'fr'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
