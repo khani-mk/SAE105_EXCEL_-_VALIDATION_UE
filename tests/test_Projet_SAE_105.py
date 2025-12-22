@@ -2,10 +2,10 @@ import openpyxl
 import os 
 
 
-list_des_fichiers=os.listdir('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
+list_des_fichiers=os.listdir('/SAE_105/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
 print(list_des_fichiers)
 
-workbook = openpyxl.load_workbook('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1/Anglais_technique_1.xlsx', data_only = True)
+workbook = openpyxl.load_workbook('/SAE_105/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1/Anglais_technique_1.xlsx', data_only = True)
 titres_onglets = workbook.sheetnames
 onglet1 = workbook[titres_onglets[0]]
 
@@ -29,7 +29,9 @@ workbook.close()
 
 #Géneration de la page html
 def genere_page_web( nom_fichier, titre, corps):    
-
+    with open(nom_fichier, 'w', encoding='utf-8') as f:
+        f.write(corps)
+    print(f"le fichier {nom_fichier} a été généré avec succès !")
     def main():
         corps = """
             <!DOCTYPE html>
@@ -185,7 +187,7 @@ def genere_page_web( nom_fichier, titre, corps):
                 </html>
             
             """
-    genere_page_web("./index.html", "mon_titre", corps) 
+    genere_page_web("index.html", "mon_titre", corps) 
 
  
 if __name__ == "__main__":
