@@ -6,9 +6,9 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'SAE105'
-copyright = '2025, Remi Karim'
-author = 'Remi Karim'
+project = 'SAE105_Excel_Etudiants'
+copyright = '2025, Rémi Karim'
+author = 'Rémi Karim'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -22,13 +22,7 @@ extensions = [
 ]
 
 templates_path = ['_templates']
-exclude_patterns = [
-'sphinx.ext.todo',
-'sphinx.ext.mathjax',
-'sphinx.ext.ifconfig',
-'sphinx.ext.autodoc',
-'sphinx.ext.viewcode',
-]
+exclude_patterns = []
 
 language = 'fr'
 
