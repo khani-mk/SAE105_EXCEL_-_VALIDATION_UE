@@ -1,15 +1,35 @@
 import openpyxl
 import os 
 
-
-list_des_fichiers=os.listdir('/SAE_105/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
-print(list_des_fichiers)
-
-workbook = openpyxl.load_workbook('/SAE_105/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1/Anglais_technique_1.xlsx', data_only = True)
+workbook = openpyxl.load_workbook(r'C:\Users\admin\Downloads\notes_S1\notes.xlsx', data_only = True)
 titres_onglets = workbook.sheetnames
 onglet1 = workbook[titres_onglets[0]]
+onglet2 = workbook[titres_onglets[1]]
+onglet3 = workbook[titres_onglets[2]]
+onglet4 = workbook[titres_onglets[3]]
+onglet5 = workbook[titres_onglets[4]]
+onglet6 = workbook[titres_onglets[5]]
+onglet7 = workbook[titres_onglets[6]]
+onglet8 = workbook[titres_onglets[7]]
+onglet9 = workbook[titres_onglets[8]]
+onglet10 = workbook[titres_onglets[9]]
+onglet11 = workbook[titres_onglets[10]]
+onglet12 = workbook[titres_onglets[11]]
+onglet13 = workbook[titres_onglets[12]]
+onglet14 = workbook[titres_onglets[13]]
+onglet15 = workbook[titres_onglets[14]]
+onglet16 = workbook[titres_onglets[15]]
+onglet17 = workbook[titres_onglets[16]]
+onglet18 = workbook[titres_onglets[17]]
+onglet19 = workbook[titres_onglets[18]]
+onglet20 = workbook[titres_onglets[19]]
+onglet21 = workbook[titres_onglets[20]]
+onglet22 = workbook[titres_onglets[21]]
+onglet23 = workbook[titres_onglets[22]]
+onglet24 = workbook[titres_onglets[23]]
+onglet25 = workbook[titres_onglets[24]]
 
-
+#onglet 1
 #Liste des lignes
 lignes = []
 for row in onglet1.values:
@@ -22,6 +42,61 @@ colonnes = []
 for column in onglet1.columns:
     colonnes.append([cell.value for cell in column])
 
+
+#onglet 2
+#Liste des lignes
+lignes = []
+for row in onglet2.values:
+    #ajoute de la ligne row à la liste lignes
+    lignes.append(list(row))
+
+
+#Liste des colonnes
+colonnes = []
+for column in onglet2.columns:
+    colonnes.append([cell.value for cell in column])
+
+
+#onglet 3
+#Liste des lignes
+lignes = []
+for row in onglet3.values:
+    #ajoute de la ligne row à la liste lignes
+    lignes.append(list(row))
+
+
+#Liste des colonnes
+colonnes = []
+for column in onglet3.columns:
+    colonnes.append([cell.value for cell in column])
+
+
+#onglet 4
+#Liste des lignes
+lignes = []
+for row in onglet4.values:
+    #ajoute de la ligne row à la liste lignes
+    lignes.append(list(row))
+
+
+#Liste des colonnes
+colonnes = []
+for column in onglet4.columns:
+    colonnes.append([cell.value for cell in column])
+
+
+#onglet 5
+#Liste des lignes
+lignes = []
+for row in onglet5.values:
+    #ajoute de la ligne row à la liste lignes
+    lignes.append(list(row))
+
+
+#Liste des colonnes
+colonnes = []
+for column in onglet5.columns:
+    colonnes.append([cell.value for cell in column])
 
 #ferme le fichier excel
 workbook.close()
