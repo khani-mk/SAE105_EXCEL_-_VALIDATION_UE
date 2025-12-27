@@ -8,7 +8,7 @@ Onglets_coef = Fichier_coef_S1.sheetnames
 feuille_active = Fichier_coef_S1[Onglets_coef[0]] 
 #On va lire les données qui sont présente dans le fichier pour pouvoir applique les coef sur les fichiers après
 for ligne in feuille_active.iter_rows(
-    min_row=2, max_row=22, min_col=2, max_col=5,
+    min_row=0, max_row=39, min_col=0, max_col=5,
     values_only=True):
     tableau_coef.append(list(ligne))
 
