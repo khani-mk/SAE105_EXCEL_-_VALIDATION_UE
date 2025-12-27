@@ -1,30 +1,36 @@
+import ast
 import openpyxl
-import os 
 
-
-list_des_fichiers=os.listdir('/SAE_105/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
-print(list_des_fichiers)
-
-workbook = openpyxl.load_workbook('/SAE_105/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1/Anglais_technique_1.xlsx', data_only = True)
+workbook = openpyxl.load_workbook(r'C:\Users\admin\Downloads\notes_S1\notes.xlsx', data_only = True)
 titres_onglets = workbook.sheetnames
-onglet1 = workbook[titres_onglets[0]]
+toutes_les_donnees = {} 
 
+for nom_onglet in workbook.sheetnames:
+    
+    # On ouvre l'onglet actuel grâce à son nom
+    feuille_actuelle = workbook[nom_onglet]
+    
+    # On récupère toutes les lignes de cet onglet sous forme de liste
+    # La fonction list() transforme le générateur 'values' en une vraie liste manipulable
+    lignes_de_l_onglet = list(feuille_actuelle.values)
+    
+    # 4. Stockage
+    # On range les lignes dans notre dictionnaire, sous le nom de l'onglet
+    toutes_les_donnees[nom_onglet] = lignes_de_l_onglet
+    
+    print(f"Onglet '{nom_onglet}' traité : {len(lignes_de_l_onglet)} lignes récupérées.")
 
-#Liste des lignes
-lignes = []
-for row in onglet1.values:
-    #ajoute de la ligne row à la liste lignes
-    lignes.append(list(row))
-
-
-#Liste des colonnes
-colonnes = []
-for column in onglet1.columns:
-    colonnes.append([cell.value for cell in column])
-
-
-#ferme le fichier excel
 workbook.close()
+
+# --- EXEMPLE D'UTILISATION DES DONNÉES ---
+
+# Maintenant, si tu veux accéder aux données du premier onglet (ex: 'UE 1.1') :
+nom_premier_onglet = workbook.sheetnames[0] # On récupère le nom
+data_onglet_1 = toutes_les_donnees[nom_premier_onglet] # On ouvre le tiroir
+
+# Afficher la valeur de la ligne 2, colonne 3 de cet onglet
+# Attention : en Python les index commencent à 0, donc ligne 2 est à l'index 1
+print(data_onglet_1[4][5])
 
 
 #Géneration de la page html
@@ -34,14 +40,6 @@ def genere_page_web( nom_fichier, titre, corps):
     print(f"le fichier {nom_fichier} a été généré avec succès !")
     def main():
         corps = """
-            <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <link rel="stylesheet" href="style.css">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Document</title>
-                </head>
                 <style>
                 table{
                     border:solid;
@@ -79,8 +77,8 @@ def genere_page_web( nom_fichier, titre, corps):
                         <td> Prénom</td>
                         <td></td>
                         <td>*</td>
-                        <td>*</td>
-                        <td id="ue1">*</td>
+                        <td>*</td>>
+                        <td id="ue1"*</td>
                         <td>*</td>
                         <td>*</td>
                         <td>*</td>
@@ -191,4 +189,4 @@ def genere_page_web( nom_fichier, titre, corps):
 
  
 if __name__ == "__main__":
-    main()
+    main() # type: ignore
