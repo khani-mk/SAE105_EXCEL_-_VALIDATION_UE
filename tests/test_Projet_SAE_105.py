@@ -104,6 +104,7 @@ Fichier.close()
 
 
 
+
 #Géneration de la page html
 def genere_page_web( nom_fichier, titre, corps):    
     with open(nom_fichier, 'w', encoding='utf-8') as f:
@@ -112,150 +113,186 @@ def genere_page_web( nom_fichier, titre, corps):
     def main():
         corps = """
                 <style>
-                table{
-                    border:solid;
-                    border-collapse: collapse;
-                }
-                td{
-                    border: solid;  
-                }
-                #ue1{
-                    background-color: red;
-                }
-                
-                #ue2{
-                    background-color: green
-                }
-                   
+                /* Configuration générale */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f5;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        /* Conteneur pour le tableau avec défilement horizontal */
+        .table-container {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow-x: auto; /* Permet le scroll sur petit écran */
+            padding: 20px;
+        }
+
+        /* Style de base du tableau */
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            font-size: 0.95em;
+            min-width: 1000px; /* Force une largeur minimale pour éviter que les colonnes ne s'écrasent */
+        }
+
+        /* En-tête du tableau */
+        .styled-table thead th {
+            background-color: #0056b3; /* Bleu professionnel */
+            color: #ffffff;
+            text-align: center; /* Centrer les titres */
+            font-weight: 600;
+            padding: 15px 10px;
+            border-bottom: 2px solid #004494;
+            white-space: nowrap; /* Empêche le texte de passer à la ligne */
+        }
+
+        /* Cellules du corps */
+        .styled-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #dee2e6;
+            text-align: center; /* Centrer le contenu des cellules */
+            color: #333;
+        }
+
+        /* Alignement à gauche pour les noms et prénoms */
+        .styled-table td:nth-child(1),
+        .styled-table td:nth-child(2) {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        /* Effet zébré (une ligne sur deux) */
+        .styled-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Effet de survol (hover) */
+        .styled-table tbody tr:hover {
+            background-color: #e2e6ea;
+            transition: background-color 0.2s ease;
+        }
+
+        /* Cellules vides */
+        .styled-table td:empty::after {
+            content: "-";
+            color: #aaa;
+        }
+
+        /* Styles spécifiques pour les statuts */
+        .status-val {
+            color: #28a745; /* Vert pour VAL */
+            font-weight: bold;
+        }
+        .status-att {
+            color: #ffc107; /* Jaune/Orange pour ATT */
+            font-weight: bold;
+        } 
                 </style>
                 <body>
-                    <table>
-                    <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>UE 1.1</td>
-                        <td>UE 1.2</td>
-                        <td>UE 1.3</td>
-                        <td>UE 1 </td>   
-                        <td>Etat UE 1 </td>
-                        <td>UE 2.1 </td>
-                        <td>UE 2.2 </td>
-                        <td>UE 2.3 </td>
-                        <td>UE 2 </td>
-                    </tr>
-                    <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td></td>
-                        <td>*</td>
-                        <td>*</td>>
-                        <td id="ue1"*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                
-                     <tr>
-                        <td> Nom  </td> 
-                        <td> Prénom</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>    
-                        <td id="ue1">*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td>*</td>
-                        <td id="ue2">*</td>
-                    </tr>
-                
-                    </table>
-                </body>
-                </html>
+                     <div class="table-container">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>UE1.1</th>
+                    <th>UE1.2</th>
+                    <th>UE1</th>
+                    <th>Etat UE1</th>
+                    <th>UE2.1</th>
+                    <th>UE2.2</th>
+                    <th>UE2</th>
+                    <th>Etat UE2</th>
+                    <th>UE3.1</th>
+                    <th>UE3.2</th>
+                    <th>UE3</th>
+                    <th>Etat UE3</th>
+                    <th>Etat BUT1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nom1</td>
+                    <td>Prénom1</td>
+                    <td>10.40</td>
+                    <td>12.25</td>
+                    <td></td>
+                    <td><span class="status-val">VAL</span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nom2</td>
+                    <td>Prénom2</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><span class="status-att">ATT</span></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nom3</td>
+                    <td>Prénom3</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Nom4</td>
+                    <td>Prénom4</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
             
-            """
+"""
     genere_page_web("index.html", "mon_titre", corps) 
 
  
