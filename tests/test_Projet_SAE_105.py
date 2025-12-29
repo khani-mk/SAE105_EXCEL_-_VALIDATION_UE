@@ -1,11 +1,12 @@
 import openpyxl
 import os
 
+fichier_de_ref = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/Coef.xlsx'
 
 #CREATION DU PROGRAMME POUR UTILISER APRES LES DONNES QUI SONT DANS LE FICHIER EXCEL
 tableau_coef= []
 
-Fichier_coef_S1= openpyxl.load_workbook('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/Coef.xlsx', data_only = True)
+Fichier_coef_S1= openpyxl.load_workbook(fichier_de_ref, data_only = True)
 Onglets_coef = Fichier_coef_S1.sheetnames
 feuille_active = Fichier_coef_S1[Onglets_coef[0]] 
 #On va lire les données qui sont présente dans le fichier pour pouvoir applique les coef sur les fichiers après
@@ -13,10 +14,50 @@ for ligne in feuille_active.iter_rows(
     min_row=0, max_row=39, min_col=0, max_col=5,
     values_only=True):
     tableau_coef.append(list(ligne))
+    
+    def dico_coef(fichier_coef):
+        wb = openpyxl.load_workbook(fichier_de_ref, data_only=True)
+        Onglets_coef = Fichier_coef_S1.sheetnames
+        feuille_active = Fichier_coef_S1[Onglets_coef[0]] 
+
+        entetes = [cell.value for cell in feuille_active[1]]
+
+        valeurs = []
+        for ligne in feuille_active.iter_rows(
+            min_row=2, max_row=feuille_active.max_row,
+            values_only=True):
+            valeurs.append(dict(zip(entetes, ligne)))
+
+        return valeurs
+    print(dico_coef(fichier_de_ref))
+
+    for ligne in tableau_coef:
+        if ligne["4"] == "Initiation_aux_réseaux_informatiques":
+            print(ligne["Coefficient"])
+    exit()
 
 
 
 
+
+
+
+exit()
+#print(tableau_coef)
+dicsionaire_notes = {}
+for ligne in tableau_coef:
+    if ligne[2] is not None and ligne[4] is not None:
+        semestre = str(ligne[0]).strip()
+        nom_matiere = str(ligne[2]).strip()
+        nom_UE = str(ligne[3]).strip()
+        valeur_coef = float(ligne[4])
+
+        if nom_matiere not in dicsionaire_notes:
+            dicsionaire_notes[nom_matiere] = {}
+
+        dicsionaire_notes[nom_matiere][nom_UE] = valeur_coef
+
+print(dicsionaire_notes)
 
 # ON VA LIRE TOUS LES FICHIERS EXCEL QUI SONT DANS LE DOSSIER notes_S1 
 dossier_notes = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1'
@@ -41,24 +82,23 @@ for fichier in os.listdir(dossier_notes):
         min_row=2, max_row=nblignes, min_col=2, max_col=4, 
         values_only=True):
         notes.append(list(ligne))
-
     
+#print(notes)
 
+exit()
 
 Gros_tableau=[notes , tableau_coef]
 print(Gros_tableau)
 
-if fichier.startswith('Initiation'):
-    print("j'ai trouvé le bon fichier")
-else:
-    print("j'ai pas trouvé")
-    
-     
+notes = Gros_tableau[0]
+coefs = Gros_tableau[1]
 
-
-
-
-
+for ligne_notes in notes:
+    prenom = ligne_notes[0]
+    nom = ligne_notes[1]
+    note = ligne_notes[2]
+    matière = nom_fichier
+    print(prenom, nom, note , matière)
 
 
 
