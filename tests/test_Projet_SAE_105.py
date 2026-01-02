@@ -115,13 +115,6 @@ for (nom, prenom,ue), total in notes.items():
     print(nom, prenom ,  ue , " → note :", total)
 
 
-# Vos données
-notes = {
-    ("Dupont", "Jean", "Maths"): 14,
-    ("Martin", "Sophie", "Info"): 18,
-    ("Durand", "Paul", "Anglais"): 12
-}
-
 # Début du code HTML
 html_content = """
 <!DOCTYPE html>
@@ -236,10 +229,10 @@ html_content = """
             </thead>
             <tbody>
                 <tr>
-                    <td>Nom1</td>
-                    <td>Prénom1</td>
-                    <td>10.40</td>
-                    <td>12.25</td>
+                    <td>Nom</td>
+                    <td>Prénom</td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td><span class="status-val">VAL</span></td>
                     <td></td>
@@ -311,7 +304,7 @@ html_content = """
 </html>
 """
 
-# Boucle Python pour ajouter les lignes (TR) et cellules (TD)
+# Boucle pour ajouter les lignes (TR) et cellules (TD)
 for (nom, prenom, ue), total in notes.items():
     html_content += f"""
     <tr>
