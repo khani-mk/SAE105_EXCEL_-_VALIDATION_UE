@@ -120,12 +120,7 @@ for (nom, prenom,ue), total in notes.items():
     print(nom, prenom ,  ue , " → note :", total)
 
 
-# Vos données
-notes = {
-    ("Dupont", "Jean", "Maths"): 14,
-    ("Martin", "Sophie", "Info"): 18,
-    ("Durand", "Paul", "Anglais"): 12
-}
+
 
 # Début du code HTML
 html_content = """
@@ -241,10 +236,10 @@ html_content = """
             </thead>
             <tbody>
                 <tr>
-                    <td>Nom1</td>
-                    <td>Prénom1</td>
-                    <td>10.40</td>
-                    <td>12.25</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td><span class="status-val">VAL</span></td>
                     <td></td>
