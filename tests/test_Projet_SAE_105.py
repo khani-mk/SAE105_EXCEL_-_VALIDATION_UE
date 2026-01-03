@@ -49,8 +49,6 @@ def lecture_du_fichier_coef_dico(fichier_coef):
 
     return tableau_coef
 
-
-
 #   FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS   
 def lire_fichier_excel(fichier , Dossier_semestre):
     note_matiere = []
@@ -73,12 +71,9 @@ def lire_fichier_excel(fichier , Dossier_semestre):
         note_matiere.append(note)   
     return note_matiere
    
-
-
 #Début du programme principal
 # Lecture du fichier des coefs  
 tableau_coef = lecture_du_fichier_coef_dico(fichier_de_ref)
-
 
 # Lecture des fichiers des notes des étudiants
 for fichier in os.listdir(dossier_notes):
@@ -108,18 +103,16 @@ for ue in liste_ue:
                 # on ne traite que la matière en cours 
                 #print('>>>>>>',eleve["Fichier_Matière"])
                 if eleve["Fichier_Matière"] == matière["Fichier"] :
-                    #print("***",eleve["Fichier_Matière"],eleve["Note"],matiere_coef)
+                    print("***",eleve["Fichier_Matière"],eleve["Note"],matiere_coef)
                     # Creation du tableau de notes final avec la pondération
                     if cle not in notes:
                         notes[cle] = 0
-                    notes[cle] += float(eleve["Note"]) * matiere_coef  / 100
+                    notes[cle] += float(eleve["Note"]) * matiere_coef/100
 
 
-    # Affichage
+# Affichage
 for (nom, prenom,ue), total in notes.items():
     print(nom, prenom ,  ue , " → note :", total)
-
-
 
 
 # Début du code HTML
@@ -214,8 +207,3 @@ with open("mes_notes.html", "w", encoding="utf-8") as file:
     file.write(html_content)
 
 print("Le fichier 'mes_notes.html' a été créé !")
-
-
-
-
-
