@@ -12,8 +12,12 @@ import os
 fichier_de_ref = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/Coef.xlsx'
 
 #CHEMIN POUR ACCEDER AU DOSSIER QUI CONTIENT LES FICHIERS EXCEL DES NOTES DE TOUS LES ETUDIANTS
-dossier_notes = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1'
+ 
 
+dossiers_notes = []
+
+dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
+dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S2')
 
 #INITIALISATION DES TABLEAUX
 # on créait des tableaux vide pour pouvoir mettre les données que nous voulons utilisées
@@ -38,7 +42,8 @@ def lecture_du_fichier_coef_dico(fichier_coef):
     Fichier_coef= openpyxl.load_workbook(fichier_de_ref, data_only = True)
 
     Onglets_coef = Fichier_coef.sheetnames
-    feuille_active = Fichier_coef[Onglets_coef[0]]
+    feuille_active = Fichier_coef[Onglets_coef[0]] # la feuille active est le premier onglet du fichier
+    
     entetes = [cell.value for cell in feuille_active[1]]
         
 
@@ -76,8 +81,9 @@ def lire_fichier_excel(fichier , Dossier_semestre):
 tableau_coef = lecture_du_fichier_coef_dico(fichier_de_ref)
 
 # Lecture des fichiers des notes des étudiants
-for fichier in os.listdir(dossier_notes):
-    Gros_Tableau_Notes = Gros_Tableau_Notes + lire_fichier_excel(fichier , dossier_notes)
+for dossier_notes in dossiers_notes:    
+    for fichier in os.listdir(dossier_notes):
+        Gros_Tableau_Notes = Gros_Tableau_Notes + lire_fichier_excel(fichier , dossier_notes)
 
 
 # liste des UE
@@ -90,7 +96,7 @@ liste_semestre = list({item["Semestre"] for item in tableau_coef})
 
 
 for ue in liste_ue:
-    print("================================== " , ue)
+    #print("================================== " , ue)
     for matière in tableau_coef:
 
         matiere_ue = matière["Unité_d_Enseignement"]
@@ -103,7 +109,7 @@ for ue in liste_ue:
                 # on ne traite que la matière en cours 
                 #print('>>>>>>',eleve["Fichier_Matière"])
                 if eleve["Fichier_Matière"] == matière["Fichier"] :
-                    print("***",eleve["Fichier_Matière"],eleve["Note"],matiere_coef)
+                    #print("***",eleve["Fichier_Matière"],eleve["Note"],matiere_coef)
                     # Creation du tableau de notes final avec la pondération
                     if cle not in notes:
                         notes[cle] = 0
