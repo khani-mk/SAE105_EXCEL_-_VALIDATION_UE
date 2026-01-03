@@ -154,7 +154,7 @@ html_content = """
     </style>
 </head>
 <body>
-    <h2>Récapitulatif des Notes par Élève</h2>
+    <h2>Récapitulatif des Notes par Élève  - (Vert=Validé/Jaune=En cours/Rouge=Non Validé)</h2>
     <table>
     <tr>
         <th>Nom</th>
