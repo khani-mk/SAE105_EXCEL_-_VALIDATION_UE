@@ -110,95 +110,95 @@ for ue in liste_ue:
                     notes[cle] += float(eleve["Note"]) * matiere_coef/ 20
 
 
-# Affichage
-for (nom, prenom,ue), total in notes.items():
-    print(nom, prenom ,  ue , " → note :", total)
+# =================================================================
+# 1. RESTRUCTURATION DES DONNÉES
+# =================================================================
 
+# On liste toutes les UEs uniques pour créer les colonnes du tableau
+toutes_les_ues = sorted(list({k[2] for k in notes.keys()}))
+
+# On regroupe les notes par élève : dictionnaire { (Nom, Prenom): {UE1: Note, UE2: Note} }
+eleves_dict = {}
+
+for (nom, prenom, ue), note in notes.items():
+    cle_eleve = (nom, prenom)
+    if cle_eleve not in eleves_dict:
+        eleves_dict[cle_eleve] = {}
+    eleves_dict[cle_eleve][ue] = note
+
+# =================================================================
+# 2. GÉNÉRATION DU HTML
+# =================================================================
 
 # Début du code HTML
 html_content = """
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Tableau de Notes BUT.1</title>
-        <style>
-                body{
-                    font-family: Arial, sans-serif;
-                    margin: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                table{
-                    border:solid;
-                    border-collapse: collapse;
-                }
-                td{
-                    border: solid;  
-                }
-                #nv{
-                    background-color: red;
-                }
-                
-                #v{
-                    background-color: green
-                }
-                #a{
-                    background-color: yellow
-                }
-                .excellent { background-color: green; font-weight: bold; }
-                .average { background-color: #e6b800; font-weight: bold; } /* Darker yellow for readability */
-                .fail { background-color: red; font-weight: bold; }
-        </style>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau Récapitulatif</title>
+    <style>
+        body{ font-family: Arial, sans-serif; padding: 20px; }
+        table{ border-collapse: collapse; width: 100%; }
+        td, th{ border: 1px solid black; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .excellent { background-color: #90ee90; } /* Vert clair */
+        .average { background-color: #ffd700; }   /* Or/Jaune */
+        .fail { background-color: #ffcccb; }      /* Rouge clair */
+    </style>
+</head>
+<body>
+    <h2>Récapitulatif des Notes par Élève</h2>
     <table>
     <tr>
-        <td>Nom</td>
-        <td>Prénom</td>
-        <td>UE</td>
-        <td>Note Totale</td>
-        <td>Statut</td>
-    </tr>
+        <th>Nom</th>
+        <th>Prénom</th>
 """
 
-# Boucle pour ajouter les lignes (TR) et cellules (TD)
-for (nom, prenom, ue), total in notes.items():
+# Ajout dynamique des colonnes pour chaque UE
+for ue in toutes_les_ues:
+    html_content += f"<th>{ue}</th>"
 
-    grade = float(total)
-    css_class = ""
-    status = ""
+html_content += "</tr>"
+
+# Boucle pour chaque élève (une ligne par élève)
+for (nom, prenom), notes_ues in eleves_dict.items():
+    html_content += f"<tr><td>{nom}</td><td>{prenom}</td>"
     
-    if grade > 10:
-        css_class = "excellent" # VERT
-        status = "Validé"
-    elif 8 <= grade <= 10:
-        css_class = "average"   # JAUNE
-        status = "En attente de validation"
-    else: # >8
-        css_class = "fail"      # ROUGE
-        status = "Non validé"
-    html_content += f"""
-    <tr>
-        <td>{nom}</td>
-        <td>{prenom}</td>
-        <td>{ue}</td>
-        <td>{total}</td>
-        <td class="{css_class}">{status}</td>
-    </tr>
-    """
+    # Pour cet élève, on regarde chaque UE (pour bien aligner les colonnes)
+    for ue in toutes_les_ues:
+        # Si l'élève a une note pour cette UE, on la récupère, sinon on met "N/A"
+        if ue in notes_ues:
+            note_finale = float(notes_ues[ue])
+            
+            # Logique des couleurs
+            if note_finale > 10:
+                css_class = "excellent"
+            elif 8 <= note_finale <= 10:
+                css_class = "average"
+            else:
+                css_class = "fail"
+            
+            # On ajoute la case avec la couleur
+            html_content += f'<td class="{css_class}">{round(note_finale, 2)}</td>'
+        else:
+            # Pas de note pour cette UE
+            html_content += "<td>-</td>"
 
-# Fin du code HTML
+    html_content += "</tr>"
+
+# Fin du HTML
 html_content += """
-        
-    <table>
-    </body>
-    </html>
+    </table>
+</body>
+</html>
 """
 
+# Écriture dans le fichier
+with open("mes_notes.html", "w", encoding="utf-8") as file:
+    file.write(html_content)
+
+print("Le fichier 'mes_notes.html' a été généré avec succès (1 ligne par élève) !")
 # Écriture dans un fichier
 with open("mes_notes.html", "w", encoding="utf-8") as file:
     file.write(html_content)
