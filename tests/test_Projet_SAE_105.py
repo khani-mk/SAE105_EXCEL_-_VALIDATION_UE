@@ -161,15 +161,13 @@ html_content = """
         <td>Prénom</td>
         <td>UE</td>
         <td>Note Totale</td>
-        <td id="a">EN ATTENTE DE VALIDATION</td>
-        <td id="v">VALIDÉ</td>
-        <td id="nv">NON VALIDÉ</td>
+        <td>Statut</td>
     </tr>
 """
 
 # Boucle pour ajouter les lignes (TR) et cellules (TD)
 for eleve in Gros_Tableau_Notes:
-    grade = eleve["Note"]
+    grade = notes[cle]
     name = eleve["Nom"] + eleve["Prénom"]
     css_class = ""
     status = ""
@@ -180,7 +178,7 @@ for eleve in Gros_Tableau_Notes:
     elif 8 <= grade <= 10:
         css_class = "average"   # JAUNE
         status = "En attente de validation"
-    else: # >8
+    else:
         css_class = "fail"      # ROUGE
         status = "Non validé"
 for (nom, prenom, ue), total in notes.items():
