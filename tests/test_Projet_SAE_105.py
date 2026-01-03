@@ -140,6 +140,12 @@ for (nom, prenom, ue), note in notes.items():
     
     
 
+    
+#Calcul de la moyenne pour chaque UE pour chaque élève
+
+
+    
+
 
 # =================================================================
 # 2. GÉNÉRATION DU HTML
