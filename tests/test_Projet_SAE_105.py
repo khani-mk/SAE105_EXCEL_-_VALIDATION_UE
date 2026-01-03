@@ -107,204 +107,82 @@ for ue in liste_ue:
                     # Creation du tableau de notes final avec la pondération
                     if cle not in notes:
                         notes[cle] = 0
-                    notes[cle] += float(eleve["Note"]) * matiere_coef  / 100
+                    notes[cle] += float(eleve["Note"]) * matiere_coef/100
 
 
-    # Affichage
+# Affichage
 for (nom, prenom,ue), total in notes.items():
     print(nom, prenom ,  ue , " → note :", total)
 
 
 # Début du code HTML
 html_content = """
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de Notes Stylisé</title>
-    <style>
-        /* Configuration générale */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eef2f5;
-            display: flex;
-            justify-content: center;
-            padding: 40px;
-        }
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tableau de Notes BUT.1</title>
+        <style>
+                body{
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
 
-        /* Conteneur pour le tableau avec défilement horizontal */
-        .table-container {
-            width: 100%;
-            max-width: 1200px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            overflow-x: auto; /* Permet le scroll sur petit écran */
-            padding: 20px;
-        }
-
-        /* Style de base du tableau */
-        .styled-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 0;
-            font-size: 0.95em;
-            min-width: 1000px; /* Force une largeur minimale pour éviter que les colonnes ne s'écrasent */
-        }
-
-        /* En-tête du tableau */
-        .styled-table thead th {
-            background-color: #0056b3; /* Bleu professionnel */
-            color: #ffffff;
-            text-align: center; /* Centrer les titres */
-            font-weight: 600;
-            padding: 15px 10px;
-            border-bottom: 2px solid #004494;
-            white-space: nowrap; /* Empêche le texte de passer à la ligne */
-        }
-
-        /* Cellules du corps */
-        .styled-table td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #dee2e6;
-            text-align: center; /* Centrer le contenu des cellules */
-            color: #333;
-        }
-
-        /* Alignement à gauche pour les noms et prénoms */
-        .styled-table td:nth-child(1),
-        .styled-table td:nth-child(2) {
-            text-align: left;
-            font-weight: 500;
-        }
-
-        /* Effet zébré (une ligne sur deux) */
-        .styled-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        /* Effet de survol (hover) */
-        .styled-table tbody tr:hover {
-            background-color: #e2e6ea;
-            transition: background-color 0.2s ease;
-        }
-
-        /* Cellules vides */
-        .styled-table td:empty::after {
-            content: "-";
-            color: #aaa;
-        }
-
-        /* Styles spécifiques pour les statuts */
-        .status-val {
-            color: #28a745; /* Vert pour VAL */
-            font-weight: bold;
-        }
-        .status-att {
-            color: #ffc107; /* Jaune/Orange pour ATT */
-            font-weight: bold;
-        }
-
-    </style>
-</head>
-<body>
-
-    <div class="table-container">
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Prénom</th>
-                    <th>UE1.1</th>
-                    <th>UE1.2</th>
-                    <th>UE1.3</th>
-                    <th>Etat UE1</th>
-                    <th>UE2.1</th>
-                    <th>UE2.2</th>
-                    <th>UE2.3</th>
-                    <th>Etat UE2</th>
-                    <th>Etat BUT1</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Nom</td>
-                    <td>Prénom</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><span class="status-val">VAL</span></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Nom2</td>
-                    <td>Prénom2</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><span class="status-att">ATT</span></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Nom3</td>
-                    <td>Prénom3</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Nom4</td>
-                    <td>Prénom4</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-</body>
-</html>
+                table{
+                    border:solid;
+                    border-collapse: collapse;
+                }
+                td{
+                    border: solid;  
+                }
+                #nv{
+                    background-color: red;
+                }
+                
+                #v{
+                    background-color: green
+                }
+                #a{
+                    background-color: yellow
+                }
+                .excellent { background-color: green; font-weight: bold; }
+                .average { background-color: #e6b800; font-weight: bold; } /* Darker yellow for readability */
+                .fail { background-color: red; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+    <table>
+    <tr>
+        <td>Nom</td>
+        <td>Prénom</td>
+        <td>UE</td>
+        <td>Note Totale</td>
+        <td id="a">EN ATTENTE DE VALIDATION</td>
+        <td id="v">VALIDÉ</td>
+        <td id="nv">NON VALIDÉ</td>
+    </tr>
 """
 
 # Boucle pour ajouter les lignes (TR) et cellules (TD)
+for eleve in Gros_Tableau_Notes:
+    grade = eleve["Note"]
+    name = eleve["Nom"] + eleve["Prénom"]
+    css_class = ""
+    status = ""
+    
+    if grade > 10:
+        css_class = "excellent" # VERT
+        status = "Validé"
+    elif 8 <= grade <= 10:
+        css_class = "average"   # JAUNE
+        status = "En attente de validation"
+    else: # >8
+        css_class = "fail"      # ROUGE
+        status = "Non validé"
 for (nom, prenom, ue), total in notes.items():
     html_content += f"""
     <tr>
@@ -312,14 +190,16 @@ for (nom, prenom, ue), total in notes.items():
         <td>{prenom}</td>
         <td>{ue}</td>
         <td>{total}</td>
+        <td class="{css_class}">{status}</td>
     </tr>
     """
 
 # Fin du code HTML
 html_content += """
-</table>
-</body>
-</html>
+        
+    <table>
+    </body>
+    </html>
 """
 
 # Écriture dans un fichier
