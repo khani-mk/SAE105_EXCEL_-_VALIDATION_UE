@@ -177,83 +177,115 @@ def calculer_decision_annee(notes_ues):
 # 2. GÉNÉRATION DU HTML (Mise à jour avec Règles BUT)
 # =================================================================
 
+def determiner_etat_ue(note):
+    """Détermine l'état d'une UE spécifique selon sa note."""
+    if note >= 10:
+        return "VALIDÉ", "ue-validee"
+    elif note >= 8:
+        return "COMPENSABLE", "ue-compensee"
+    else:
+        return "NON VALIDÉ", "ue-echec"
+
 html_content = """
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Tableau Récapitulatif BUT</title>
+    <title>Tableau Récapitulatif BUT - Détaillé</title>
     <style>
-        body{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
-        table{ border-collapse: collapse; width: 100%; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-        td, th{ border: 1px solid #ddd; padding: 12px; text-align: center; }
-        th { background-color: #009879; color: white; }
-        tr:nth-child(even){background-color: #f2f2f2;}
+        body{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; font-size: 14px; }
+        h2 { color: #333; }
+        table{ border-collapse: collapse; width: 100%; box-shadow: 0 0 20px rgba(0,0,0,0.1); margin-top: 20px; }
+        td, th{ border: 1px solid #ddd; padding: 10px; text-align: center; }
         
-        /* Couleurs des notes individuelles */
-        .ue-validee { background-color: #c6efce; color: #006100; } /* Vert */
-        .ue-compensee { background-color: #ffeb9c; color: #9c5700; } /* Jaune/Orange */
-        .ue-echec { background-color: #ffc7ce; color: #9c0006; }    /* Rouge */
+        /* En-têtes */
+        th { background-color: #009879; color: white; vertical-align: middle; }
+        tr:nth-child(even){background-color: #f9f9f9;}
+        
+        /* Styles des états UE */
+        .ue-validee { background-color: #c6efce; color: #006100; font-weight: bold; }
+        .ue-compensee { background-color: #ffeb9c; color: #9c5700; font-weight: bold; }
+        .ue-echec { background-color: #ffc7ce; color: #9c0006; font-weight: bold; }
 
-        /* Couleurs de la décision finale */
-        .excellent { background-color: #28a745; color: white; font-weight: bold; }
-        .fail { background-color: #dc3545; color: white; font-weight: bold; }
+        /* Styles de la décision finale */
+        .decision-ok { background-color: #28a745; color: white; font-weight: bold; font-size: 1.1em; }
+        .decision-fail { background-color: #dc3545; color: white; font-weight: bold; font-size: 1.1em; }
+        
+        /* Séparation visuelle entre les étudiants */
+        tr:hover { background-color: #f1f1f1; }
     </style>
 </head>
 <body>
-    <h2>BUT.1-R&T</h2>
-    <p>Règle : Aucune UE < 8 <b>ET</b> au moins 2 UE >= 10.</p>
+    <h2>Jury de passage BUT1 (Détail par UE)</h2>
+    <ul>
+        <li><span style="background-color:#c6efce; padding:2px 5px;">VALIDÉ</span> : Moyenne UE ≥ 10</li>
+        <li><span style="background-color:#ffeb9c; padding:2px 5px;">COMPENSABLE</span> : 8 ≤ Moyenne UE < 10 (Doit être compensé par d'autres UE)</li>
+        <li><span style="background-color:#ffc7ce; padding:2px 5px;">NON VALIDÉ</span> : Moyenne UE < 8 (Éliminatoire)</li>
+    </ul>
+    
     <table>
-    <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
+    <thead>
+        <tr>
+            <th rowspan="2">Nom</th>
+            <th rowspan="2">Prénom</th>
 """
 
-# Ajout dynamique des colonnes UE
+# --- CRÉATION DES EN-TÊTES ---
+# On crée une super-colonne par UE qui englobe "Moyenne" et "État"
 for ue in toutes_les_ues:
-    html_content += f"<th>{ue}</th>"
+    html_content += f'<th colspan="2" style="border-bottom: 2px solid white;">{ue}</th>'
 
-# Ajout de la colonne Décision
-html_content += "<th>Etat BUT1</th></tr>"
+html_content += '<th rowspan="2">DÉCISION<br>PASSAGE</th></tr><tr>'
 
-# Boucle pour chaque élève
+# Sous-colonnes pour chaque UE
+for ue in toutes_les_ues:
+    html_content += '<th>Moyenne</th><th>État</th>'
+
+html_content += '</tr></thead><tbody>'
+
+# --- REMPLISSAGE DU TABLEAU ---
 for (nom, prenom), notes_ues in eleves_dict.items():
     
-    # 1. On calcule d'abord la décision globale pour l'année
+    # Calcul de la décision globale (Jury)
     decision_texte, decision_class = calculer_decision_annee(notes_ues)
-
-    html_content += f"<tr><td>{nom}</td><td>{prenom}</td>"
     
-    # 2. Affichage des notes par UE
+    # Mapping des classes CSS pour la décision finale
+    final_css = "decision-ok" if decision_class == "excellent" else "decision-fail"
+
+    html_content += f"<tr><td><b>{nom}</b></td><td>{prenom}</td>"
+    
+    # Boucle sur chaque UE pour afficher Note ET État
     for ue in toutes_les_ues:
         if ue in notes_ues:
             note_finale = float(notes_ues[ue])
             
-            # Logique d'affichage des couleurs par cellule (UE)
-            # Si note > 10 : Vert
-            # Si 8 <= note < 10 : Jaune (Potentiellement compensé)
-            # Si note < 8 : Rouge
+            # On détermine l'état de CETTE UE spécifiquement
+            etat_texte, css_class = determiner_etat_ue(note_finale)
             
-            if note_finale >= 10:
-                css_class = "ue-validee"
-            elif note_finale >= 8:
-                css_class = "ue-compensee"
-            else:
-                css_class = "ue-echec"
-            
-            html_content += f'<td class="{css_class}">{round(note_finale, 2)}</td>'
+            # 1. Cellule Moyenne
+            html_content += f'<td>{round(note_finale, 2)}</td>'
+            # 2. Cellule État
+            html_content += f'<td class="{css_class}">{etat_texte}</td>'
         else:
-            html_content += "<td>-</td>"
+            # Si pas de note
+            html_content += "<td>-</td><td>-</td>"
 
-    # 3. Ajout de la colonne Décision Finale
-    html_content += f'<td class="{decision_class}">{decision_texte}</td>'
+    # Colonne finale : Décision du jury
+    html_content += f'<td class="{final_css}">{decision_texte}</td>'
     html_content += "</tr>"
 
 html_content += """
+    </tbody>
     </table>
 </body>
 </html>
 """
+
+# Écriture dans le fichier
+with open("mes_notes.html", "w", encoding="utf-8") as file:
+    file.write(html_content)
+
+print("Le fichier 'mes_notes.html' a été généré avec le détail par UE (Note + État) !")
 
 # Écriture dans le fichier
 with open("mes_notes.html", "w", encoding="utf-8") as file:
