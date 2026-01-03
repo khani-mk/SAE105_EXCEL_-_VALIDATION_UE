@@ -19,6 +19,10 @@ dossiers_notes = []
 dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
 dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S2')
 
+
+
+
+
 #INITIALISATION DES TABLEAUX
 # on créait des tableaux vide pour pouvoir mettre les données que nous voulons utilisées
 
@@ -113,7 +117,9 @@ for ue in liste_ue:
                     # Creation du tableau de notes final avec la pondération
                     if cle not in notes:
                         notes[cle] = 0
-                    notes[cle] += float(eleve["Note"]) * matiere_coef/ 20
+                    notes[cle] += float(eleve["Note"]) * matiere_coef / 100
+
+    
 
 
 # =================================================================
@@ -131,6 +137,9 @@ for (nom, prenom, ue), note in notes.items():
     if cle_eleve not in eleves_dict:
         eleves_dict[cle_eleve] = {}
     eleves_dict[cle_eleve][ue] = note
+    
+    
+
 
 # =================================================================
 # 2. GÉNÉRATION DU HTML
