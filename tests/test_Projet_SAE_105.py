@@ -140,75 +140,115 @@ for (nom, prenom, ue), note in notes.items():
     
     
 
+
+
+
+def calculer_decision_annee(notes_ues):
+    """
+    Applique les règles de passage du BUT basées sur l'image :
+    - Avoir au moins 2 UE >= 10
+    - Avoir toutes les UE >= 8 (aucune < 8)
+    """
+    valeurs_notes = list(notes_ues.values())
     
-#Calcul de la moyenne pour chaque UE pour chaque élève
+    # Si l'étudiant n'a pas toutes les notes (ex: absent), on considère incomplet
+    # On suppose ici qu'il y a 3 UE (UE1, UE2, UE3) comme dans l'exemple, 
+    # mais le code s'adapte au nombre d'UE présentes.
+    if not valeurs_notes:
+        return "Incomplet", "fail"
 
+    # Règle 1 : Vérifier si une UE est < 8 (Éliminatoire)
+    for note in valeurs_notes:
+        if note < 8:
+            return "REFUSÉ (UE < 8)", "fail"
+
+    # Règle 2 : Compter le nombre d'UE >= 10
+    nb_ue_sup_10 = sum(1 for note in valeurs_notes if note >= 10)
+
+    # Il faut au moins 2 UE >= 10 pour valider
+    if nb_ue_sup_10 >= 2:
+        return "ADMIS (Passage BUT2)", "excellent"
+    else:
+        # Cas où l'étudiant a tout > 8 mais n'a pas deux notes > 10 (ex: 9, 9, 9)
+        return "REFUSÉ (Pas assez d'UE > 10)", "fail"
 
     
-
-
 # =================================================================
-# 2. GÉNÉRATION DU HTML
+# 2. GÉNÉRATION DU HTML (Mise à jour avec Règles BUT)
 # =================================================================
 
-# Début du code HTML
 html_content = """
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Tableau Récapitulatif</title>
+    <title>Tableau Récapitulatif BUT</title>
     <style>
-        body{ font-family: Arial, sans-serif; padding: 20px; }
-        table{ border-collapse: collapse; width: 100%; }
-        td, th{ border: 1px solid black; padding: 8px; text-align: center; }
-        th { background-color: #f2f2f2; }
-        .excellent { background-color: #90ee90; } /* Vert clair */
-        .average { background-color: #ffd700; }   /* Or/Jaune */
-        .fail { background-color: #ffcccb; }      /* Rouge clair */
+        body{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; }
+        table{ border-collapse: collapse; width: 100%; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        td, th{ border: 1px solid #ddd; padding: 12px; text-align: center; }
+        th { background-color: #009879; color: white; }
+        tr:nth-child(even){background-color: #f2f2f2;}
+        
+        /* Couleurs des notes individuelles */
+        .ue-validee { background-color: #c6efce; color: #006100; } /* Vert */
+        .ue-compensee { background-color: #ffeb9c; color: #9c5700; } /* Jaune/Orange */
+        .ue-echec { background-color: #ffc7ce; color: #9c0006; }    /* Rouge */
+
+        /* Couleurs de la décision finale */
+        .excellent { background-color: #28a745; color: white; font-weight: bold; }
+        .fail { background-color: #dc3545; color: white; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h2>Récapitulatif des Notes par Élève  - (Vert=Validé/Jaune=En cours/Rouge=Non Validé)</h2>
+    <h2>BUT.1-R&T</h2>
+    <p>Règle : Aucune UE < 8 <b>ET</b> au moins 2 UE >= 10.</p>
     <table>
     <tr>
         <th>Nom</th>
         <th>Prénom</th>
 """
 
-# Ajout dynamique des colonnes pour chaque UE
+# Ajout dynamique des colonnes UE
 for ue in toutes_les_ues:
     html_content += f"<th>{ue}</th>"
 
-html_content += "</tr>"
+# Ajout de la colonne Décision
+html_content += "<th>Etat BUT1</th></tr>"
 
-# Boucle pour chaque élève (une ligne par élève)
+# Boucle pour chaque élève
 for (nom, prenom), notes_ues in eleves_dict.items():
+    
+    # 1. On calcule d'abord la décision globale pour l'année
+    decision_texte, decision_class = calculer_decision_annee(notes_ues)
+
     html_content += f"<tr><td>{nom}</td><td>{prenom}</td>"
     
-    # Pour cet élève, on regarde chaque UE (pour bien aligner les colonnes)
+    # 2. Affichage des notes par UE
     for ue in toutes_les_ues:
-        # Si l'élève a une note pour cette UE, on la récupère, sinon on met "N/A"
         if ue in notes_ues:
             note_finale = float(notes_ues[ue])
             
-            # Logique des couleurs
-            if note_finale > 10:
-                css_class = "excellent"
-            elif 8 <= note_finale <= 10:
-                css_class = "average"
-            else:
-                css_class = "fail"
+            # Logique d'affichage des couleurs par cellule (UE)
+            # Si note > 10 : Vert
+            # Si 8 <= note < 10 : Jaune (Potentiellement compensé)
+            # Si note < 8 : Rouge
             
-            # On ajoute la case avec la couleur
+            if note_finale >= 10:
+                css_class = "ue-validee"
+            elif note_finale >= 8:
+                css_class = "ue-compensee"
+            else:
+                css_class = "ue-echec"
+            
             html_content += f'<td class="{css_class}">{round(note_finale, 2)}</td>'
         else:
-            # Pas de note pour cette UE
             html_content += "<td>-</td>"
 
+    # 3. Ajout de la colonne Décision Finale
+    html_content += f'<td class="{decision_class}">{decision_texte}</td>'
     html_content += "</tr>"
 
-# Fin du HTML
 html_content += """
     </table>
 </body>
@@ -219,9 +259,4 @@ html_content += """
 with open("mes_notes.html", "w", encoding="utf-8") as file:
     file.write(html_content)
 
-print("Le fichier 'mes_notes.html' a été généré avec succès (1 ligne par élève) !")
-# Écriture dans un fichier
-with open("mes_notes.html", "w", encoding="utf-8") as file:
-    file.write(html_content)
-
-print("Le fichier 'mes_notes.html' a été créé !")
+print("Le fichier 'mes_notes.html' a été mis à jour avec les règles de passage BUT !")
