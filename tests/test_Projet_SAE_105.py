@@ -107,7 +107,7 @@ for ue in liste_ue:
                     # Creation du tableau de notes final avec la pondération
                     if cle not in notes:
                         notes[cle] = 0
-                    notes[cle] += float(eleve["Note"]) * matiere_coef/100
+                    notes[cle] += float(eleve["Note"]) * matiere_coef/ 20
 
 
 # Affichage
@@ -161,16 +161,14 @@ html_content = """
         <td>Prénom</td>
         <td>UE</td>
         <td>Note Totale</td>
-        <td id="a">EN ATTENTE DE VALIDATION</td>
-        <td id="v">VALIDÉ</td>
-        <td id="nv">NON VALIDÉ</td>
+        <td>Statut</td>
     </tr>
 """
 
 # Boucle pour ajouter les lignes (TR) et cellules (TD)
-for eleve in Gros_Tableau_Notes:
-    grade = eleve["Note"]
-    name = eleve["Nom"] + eleve["Prénom"]
+for (nom, prenom, ue), total in notes.items():
+
+    grade = float(total)
     css_class = ""
     status = ""
     
@@ -183,7 +181,6 @@ for eleve in Gros_Tableau_Notes:
     else: # >8
         css_class = "fail"      # ROUGE
         status = "Non validé"
-for (nom, prenom, ue), total in notes.items():
     html_content += f"""
     <tr>
         <td>{nom}</td>

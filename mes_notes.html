@@ -1,0 +1,692 @@
+
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tableau de Notes BUT.1</title>
+        <style>
+                body{
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                table{
+                    border:solid;
+                    border-collapse: collapse;
+                }
+                td{
+                    border: solid;  
+                }
+                #nv{
+                    background-color: red;
+                }
+                
+                #v{
+                    background-color: green
+                }
+                #a{
+                    background-color: yellow
+                }
+                .excellent { background-color: green; font-weight: bold; }
+                .average { background-color: #e6b800; font-weight: bold; } /* Darker yellow for readability */
+                .fail { background-color: red; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+    <table>
+    <tr>
+        <td>Nom</td>
+        <td>Prénom</td>
+        <td>UE</td>
+        <td>Note Totale</td>
+        <td>Statut</td>
+    </tr>
+
+    <tr>
+        <td>GIBEL</td>
+        <td>Bastien</td>
+        <td>UE2.3</td>
+        <td>9.05</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>COUREAU</td>
+        <td>Matthias</td>
+        <td>UE2.3</td>
+        <td>9.4</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>ONETTE</td>
+        <td>Camille</td>
+        <td>UE2.3</td>
+        <td>4.9</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KILO</td>
+        <td>Sandy</td>
+        <td>UE2.3</td>
+        <td>9.85</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>NICOUVERTURE</td>
+        <td>Sandra</td>
+        <td>UE2.3</td>
+        <td>6.3</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>TOKECHUP</td>
+        <td>Thomas</td>
+        <td>UE2.3</td>
+        <td>1.25</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KIKI</td>
+        <td>Terry</td>
+        <td>UE2.3</td>
+        <td>9.8</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>HIERE</td>
+        <td>Claire</td>
+        <td>UE2.3</td>
+        <td>2.95</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>OTTOFRAISE</td>
+        <td>Charles</td>
+        <td>UE2.3</td>
+        <td>3.75</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>CEPACARE</td>
+        <td>Cicéron</td>
+        <td>UE2.3</td>
+        <td>6.55</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>ORIAL</td>
+        <td>Édith</td>
+        <td>UE2.3</td>
+        <td>2.5</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>POREE</td>
+        <td>Eva</td>
+        <td>UE2.3</td>
+        <td>2.5</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>TIM</td>
+        <td>Marie</td>
+        <td>UE2.3</td>
+        <td>10.0</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>ERATEUR</td>
+        <td>Maude</td>
+        <td>UE2.3</td>
+        <td>3.55</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>HEMIQUE</td>
+        <td>Paul</td>
+        <td>UE2.3</td>
+        <td>2.15</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>EUGENE</td>
+        <td>Sam</td>
+        <td>UE2.3</td>
+        <td>6.5</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>VIGOTE</td>
+        <td>Sarah</td>
+        <td>UE2.3</td>
+        <td>4.15</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>EGERIE</td>
+        <td>Tom</td>
+        <td>UE2.3</td>
+        <td>1.4</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>DANLMUR</td>
+        <td>Alphonse</td>
+        <td>UE2.3</td>
+        <td>3.7</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>LORIEUX</td>
+        <td>Victor</td>
+        <td>UE2.3</td>
+        <td>9.8</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>GIBEL</td>
+        <td>Bastien</td>
+        <td>UE1.1</td>
+        <td>10.870000000000001</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>COUREAU</td>
+        <td>Matthias</td>
+        <td>UE1.1</td>
+        <td>7.819999999999999</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>ONETTE</td>
+        <td>Camille</td>
+        <td>UE1.1</td>
+        <td>5.42</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KILO</td>
+        <td>Sandy</td>
+        <td>UE1.1</td>
+        <td>11.390000000000002</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>NICOUVERTURE</td>
+        <td>Sandra</td>
+        <td>UE1.1</td>
+        <td>4.6</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>TOKECHUP</td>
+        <td>Thomas</td>
+        <td>UE1.1</td>
+        <td>4.61</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KIKI</td>
+        <td>Terry</td>
+        <td>UE1.1</td>
+        <td>5.24</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>HIERE</td>
+        <td>Claire</td>
+        <td>UE1.1</td>
+        <td>6.59</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>OTTOFRAISE</td>
+        <td>Charles</td>
+        <td>UE1.1</td>
+        <td>9.29</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>CEPACARE</td>
+        <td>Cicéron</td>
+        <td>UE1.1</td>
+        <td>10.65</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>ORIAL</td>
+        <td>Édith</td>
+        <td>UE1.1</td>
+        <td>5.779999999999999</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>POREE</td>
+        <td>Eva</td>
+        <td>UE1.1</td>
+        <td>5.54</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>TIM</td>
+        <td>Marie</td>
+        <td>UE1.1</td>
+        <td>8.1</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>ERATEUR</td>
+        <td>Maude</td>
+        <td>UE1.1</td>
+        <td>4.61</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>HEMIQUE</td>
+        <td>Paul</td>
+        <td>UE1.1</td>
+        <td>9.690000000000001</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>EUGENE</td>
+        <td>Sam</td>
+        <td>UE1.1</td>
+        <td>9.940000000000001</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>VIGOTE</td>
+        <td>Sarah</td>
+        <td>UE1.1</td>
+        <td>5.630000000000001</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>EGERIE</td>
+        <td>Tom</td>
+        <td>UE1.1</td>
+        <td>4.420000000000001</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>DANLMUR</td>
+        <td>Alphonse</td>
+        <td>UE1.1</td>
+        <td>9.9</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>LORIEUX</td>
+        <td>Victor</td>
+        <td>UE1.1</td>
+        <td>3.68</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>GIBEL</td>
+        <td>Bastien</td>
+        <td>UE1.2</td>
+        <td>9.58</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>COUREAU</td>
+        <td>Matthias</td>
+        <td>UE1.2</td>
+        <td>10.370000000000003</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>ONETTE</td>
+        <td>Camille</td>
+        <td>UE1.2</td>
+        <td>6.74</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KILO</td>
+        <td>Sandy</td>
+        <td>UE1.2</td>
+        <td>13.1</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>NICOUVERTURE</td>
+        <td>Sandra</td>
+        <td>UE1.2</td>
+        <td>3.1799999999999997</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>TOKECHUP</td>
+        <td>Thomas</td>
+        <td>UE1.2</td>
+        <td>3.9999999999999996</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KIKI</td>
+        <td>Terry</td>
+        <td>UE1.2</td>
+        <td>5.38</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>HIERE</td>
+        <td>Claire</td>
+        <td>UE1.2</td>
+        <td>8.81</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>OTTOFRAISE</td>
+        <td>Charles</td>
+        <td>UE1.2</td>
+        <td>9.27</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>CEPACARE</td>
+        <td>Cicéron</td>
+        <td>UE1.2</td>
+        <td>9.32</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>ORIAL</td>
+        <td>Édith</td>
+        <td>UE1.2</td>
+        <td>8.24</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>POREE</td>
+        <td>Eva</td>
+        <td>UE1.2</td>
+        <td>6.529999999999999</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>TIM</td>
+        <td>Marie</td>
+        <td>UE1.2</td>
+        <td>6.38</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>ERATEUR</td>
+        <td>Maude</td>
+        <td>UE1.2</td>
+        <td>6.4399999999999995</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>HEMIQUE</td>
+        <td>Paul</td>
+        <td>UE1.2</td>
+        <td>11.2</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>EUGENE</td>
+        <td>Sam</td>
+        <td>UE1.2</td>
+        <td>8.32</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>VIGOTE</td>
+        <td>Sarah</td>
+        <td>UE1.2</td>
+        <td>4.640000000000001</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>EGERIE</td>
+        <td>Tom</td>
+        <td>UE1.2</td>
+        <td>4.930000000000001</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>DANLMUR</td>
+        <td>Alphonse</td>
+        <td>UE1.2</td>
+        <td>8.75</td>
+        <td class="average">En attente de validation</td>
+    </tr>
+    
+    <tr>
+        <td>LORIEUX</td>
+        <td>Victor</td>
+        <td>UE1.2</td>
+        <td>3.8200000000000003</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>GIBEL</td>
+        <td>Bastien</td>
+        <td>UE1.3</td>
+        <td>32.41</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>COUREAU</td>
+        <td>Matthias</td>
+        <td>UE1.3</td>
+        <td>18.595</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>ONETTE</td>
+        <td>Camille</td>
+        <td>UE1.3</td>
+        <td>7.43</td>
+        <td class="fail">Non validé</td>
+    </tr>
+    
+    <tr>
+        <td>KILO</td>
+        <td>Sandy</td>
+        <td>UE1.3</td>
+        <td>24.059999999999995</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>NICOUVERTURE</td>
+        <td>Sandra</td>
+        <td>UE1.3</td>
+        <td>12.944999999999999</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>TOKECHUP</td>
+        <td>Thomas</td>
+        <td>UE1.3</td>
+        <td>10.57</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>KIKI</td>
+        <td>Terry</td>
+        <td>UE1.3</td>
+        <td>12.5</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>HIERE</td>
+        <td>Claire</td>
+        <td>UE1.3</td>
+        <td>17.11</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>OTTOFRAISE</td>
+        <td>Charles</td>
+        <td>UE1.3</td>
+        <td>17.705000000000002</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>CEPACARE</td>
+        <td>Cicéron</td>
+        <td>UE1.3</td>
+        <td>21.084999999999997</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>ORIAL</td>
+        <td>Édith</td>
+        <td>UE1.3</td>
+        <td>13.469999999999999</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>POREE</td>
+        <td>Eva</td>
+        <td>UE1.3</td>
+        <td>11.325</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>TIM</td>
+        <td>Marie</td>
+        <td>UE1.3</td>
+        <td>15.875</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>ERATEUR</td>
+        <td>Maude</td>
+        <td>UE1.3</td>
+        <td>18.235</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>HEMIQUE</td>
+        <td>Paul</td>
+        <td>UE1.3</td>
+        <td>24.524999999999995</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>EUGENE</td>
+        <td>Sam</td>
+        <td>UE1.3</td>
+        <td>25.834999999999997</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>VIGOTE</td>
+        <td>Sarah</td>
+        <td>UE1.3</td>
+        <td>28.185000000000002</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>EGERIE</td>
+        <td>Tom</td>
+        <td>UE1.3</td>
+        <td>14.525</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>DANLMUR</td>
+        <td>Alphonse</td>
+        <td>UE1.3</td>
+        <td>32.65</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+    <tr>
+        <td>LORIEUX</td>
+        <td>Victor</td>
+        <td>UE1.3</td>
+        <td>13.195</td>
+        <td class="excellent">Validé</td>
+    </tr>
+    
+        
+    <table>
+    </body>
+    </html>
