@@ -38,25 +38,35 @@ notes = {}
 
 #FONCTION POUR LIRE LE FICHIER EXCEL DES COEFS
 def lecture_du_fichier_coef_dico(fichier_coef):
+    #Creatio d'un tableau vide pour mettre nos données dedans
     tableau_coef = []
+
+    #on va aller ouvrir le fichier de ref pour connaitre les coefs
     Fichier_coef= openpyxl.load_workbook(fichier_de_ref, data_only = True)
 
+    
     Onglets_coef = Fichier_coef.sheetnames
     feuille_active = Fichier_coef[Onglets_coef[0]] # la feuille active est le premier onglet du fichier
     
+    #On va lire toutes les données de la ligne 1 dans le fichier excel
     entetes = [cell.value for cell in feuille_active[1]]
         
-
+    # on fait une boucle pour dire de lire toutes lignes dans le fichiers des coefs
     for ligne in feuille_active.iter_rows(
         min_row=2, max_row=feuille_active.max_row,
         values_only=True):
+        #ca va créer un dictionnaire qu'on va utiliser plus tard
         tableau_coef.append(dict(zip(entetes, ligne)))
-    
+
+    #ca remplie le tableau avec les données présent dans le fichier excel des coefs
     return tableau_coef
 
 #   FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS   
 def lire_fichier_excel(fichier , Dossier_semestre):
+    # On créait un tableau vide pour pouvoir y mettre les valeurs qu'on veut 
     note_matiere = []
+
+    #c'est pour connaitre le nom de la matière grace au fichier ( par expemple si m)
     Fichier_Matière = os.path.basename(fichier)
     Dossier_semestre_basename = os.path.basename(Dossier_semestre)
     Fichier_Excel = openpyxl.load_workbook(os.path.join(Dossier_semestre, fichier), data_only = True)
@@ -76,6 +86,7 @@ def lire_fichier_excel(fichier , Dossier_semestre):
         note_matiere.append(note)   
     return note_matiere
 
+# FONCtion pour déterminer l'état des UE
 def determiner_etat_ue(note):
     """
     Détermine l'état d'une UE selon sa moyenne annuelle.
@@ -87,6 +98,7 @@ def determiner_etat_ue(note):
     else:
         return "NON VALIDÉ", "ue-echec"
 
+#fonction pour déterminer si on est accepté ou pas 
 def calculer_decision_passage(liste_moyennes_annuelles):
     """
     Règles de passage BUT sur les MOYENNES ANNUELLES :
