@@ -167,7 +167,7 @@ html_content = """
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Jury Annuel BUT1 - Détaillé</title>
+    <title>BUT1-R&T</title>
     <style>
         body{ font-family: 'Segoe UI', sans-serif; padding: 20px; font-size: 13px; }
         h2 { text-align: center; color: #333; }
@@ -197,7 +197,7 @@ html_content = """
     </style>
 </head>
 <body>
-    <h2>Détail Jury Annuel BUT1</h2>
+    <h2>Notes BUT1 - R&T </h2>
     
     <table>
     <thead>
