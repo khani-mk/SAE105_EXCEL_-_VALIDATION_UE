@@ -19,10 +19,6 @@ dossiers_notes = []
 dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S1')
 dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/tests/test/notes_S2')
 
-
-
-
-
 #INITIALISATION DES TABLEAUX
 # on créait des tableaux vide pour pouvoir mettre les données que nous voulons utilisées
 
@@ -55,7 +51,7 @@ def lecture_du_fichier_coef_dico(fichier_coef):
         min_row=2, max_row=feuille_active.max_row,
         values_only=True):
         tableau_coef.append(dict(zip(entetes, ligne)))
-
+    
     return tableau_coef
 
 #   FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS   
@@ -121,64 +117,18 @@ for ue in liste_ue:
 
     
 
+# On détermine les noms des UEs "racines" (ex: UE1, UE2)
+# On suppose le format "UEy.x". On split sur le point et on garde la première partie.
+ues_racines = sorted(list({ue.split('.')[0] for ue in liste_ue}))
 
-# =================================================================
-# 1. RESTRUCTURATION DES DONNÉES
-# =================================================================
+# Liste de tous les étudiants (Nom, Prénom) uniques
+etudiants_uniques = sorted(list(set((k[0], k[1]) for k in notes.keys())))
 
-# On liste toutes les UEs uniques pour créer les colonnes du tableau
-toutes_les_ues = sorted(list({k[2] for k in notes.keys()}))
-
-# On regroupe les notes par élève : dictionnaire { (Nom, Prenom): {UE1: Note, UE2: Note} }
-eleves_dict = {}
-
-for (nom, prenom, ue), note in notes.items():
-    cle_eleve = (nom, prenom)
-    if cle_eleve not in eleves_dict:
-        eleves_dict[cle_eleve] = {}
-    eleves_dict[cle_eleve][ue] = note
-    
-    
-
-
-
-
-def calculer_decision_annee(notes_ues):
-    """
-    Applique les règles de passage du BUT basées sur l'image :
-    - Avoir au moins 2 UE >= 10
-    - Avoir toutes les UE >= 8 (aucune < 8)
-    """
-    valeurs_notes = list(notes_ues.values())
-    
-    # Si l'étudiant n'a pas toutes les notes (ex: absent), on considère incomplet
-    # On suppose ici qu'il y a 3 UE (UE1, UE2, UE3) comme dans l'exemple, 
-    # mais le code s'adapte au nombre d'UE présentes.
-    if not valeurs_notes:
-        return "Incomplet", "fail"
-
-    # Règle 1 : Vérifier si une UE est < 8 (Éliminatoire)
-    for note in valeurs_notes:
-        if note < 8:
-            return "REFUSÉ (UE < 8)", "fail"
-
-    # Règle 2 : Compter le nombre d'UE >= 10
-    nb_ue_sup_10 = sum(1 for note in valeurs_notes if note >= 10)
-
-    # Il faut au moins 2 UE >= 10 pour valider
-    if nb_ue_sup_10 >= 2:
-        return "ADMIS (Passage BUT2)", "excellent"
-    else:
-        # Cas où l'étudiant a tout > 8 mais n'a pas deux notes > 10 (ex: 9, 9, 9)
-        return "REFUSÉ (Pas assez d'UE > 10)", "fail"
-
-    
-# =================================================================
-# 2. GÉNÉRATION DU HTML (Mise à jour avec Règles BUT)
-# =================================================================
 
 def determiner_etat_ue(note):
-    """Détermine l'état d'une UE spécifique selon sa note."""
+    """
+    Détermine l'état d'une UE selon sa moyenne annuelle.
+    """
     if note >= 10:
         return "VALIDÉ", "ue-validee"
     elif note >= 8:
@@ -186,93 +136,130 @@ def determiner_etat_ue(note):
     else:
         return "NON VALIDÉ", "ue-echec"
 
+def calculer_decision_passage(liste_moyennes_annuelles):
+    """
+    Règles de passage BUT sur les MOYENNES ANNUELLES :
+    1. Aucune UE < 8 (Pas de 'NON VALIDÉ')
+    2. Au moins 2 UE >= 10
+    """
+    # S'il n'y a aucune note
+    if not liste_moyennes_annuelles:
+        return "Incomplet", "decision-fail"
+
+    # 1. Vérification éliminatoire (< 8)
+    if any(note < 8 for note in liste_moyennes_annuelles):
+        return "REFUSÉ (UE < 8)", "decision-fail"
+    
+    # 2. Comptage des UE validées (>= 10)
+    nb_ue_validees = sum(1 for note in liste_moyennes_annuelles if note >= 10)
+    
+    # Règle : Il faut au moins 2 UE >= 10
+    if nb_ue_validees >= 2:
+        return "ADMIS (Passage BUT2)", "decision-ok"
+    else:
+        return "REFUSÉ (Manque UE > 10)", "decision-fail"
+
+
+# GÉNÉRATION DU HTML 
+
 html_content = """
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Tableau Récapitulatif BUT - Détaillé</title>
+    <title>Jury Annuel BUT1 - Détaillé</title>
     <style>
-        body{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; font-size: 14px; }
-        h2 { color: #333; }
-        table{ border-collapse: collapse; width: 100%; box-shadow: 0 0 20px rgba(0,0,0,0.1); margin-top: 20px; }
-        td, th{ border: 1px solid #ddd; padding: 10px; text-align: center; }
+        body{ font-family: 'Segoe UI', sans-serif; padding: 20px; font-size: 13px; }
+        h2 { text-align: center; color: #333; }
+        table{ border-collapse: collapse; width: 100%; box-shadow: 0 0 15px rgba(0,0,0,0.1); margin-top: 20px; }
+        
+        /* Cellules */
+        td, th{ border: 1px solid #ddd; padding: 8px 4px; text-align: center; }
         
         /* En-têtes */
-        th { background-color: #009879; color: white; vertical-align: middle; }
-        tr:nth-child(even){background-color: #f9f9f9;}
+        thead tr:first-child th { background-color: #005f99; color: white; border-right: 1px solid white; }
+        thead tr:nth-child(2) th { background-color: #007acc; color: white; font-size: 0.9em; }
         
-        /* Styles des états UE */
-        .ue-validee { background-color: #c6efce; color: #006100; font-weight: bold; }
-        .ue-compensee { background-color: #ffeb9c; color: #9c5700; font-weight: bold; }
-        .ue-echec { background-color: #ffc7ce; color: #9c0006; font-weight: bold; }
+        /* Distinction visuelle des semestres */
+        .col-semestre { background-color: #fcfcfc; color: #555; }
+        .col-moyenne { background-color: #fff; font-weight: bold; border-left: 2px solid #ccc; }
+        
+        /* États UE */
+        .ue-validee { background-color: #d4edda; color: #155724; font-weight: bold; }
+        .ue-compensee { background-color: #fff3cd; color: #856404; font-weight: bold; }
+        .ue-echec { background-color: #f8d7da; color: #721c24; font-weight: bold; }
 
-        /* Styles de la décision finale */
+        /* Décision finale */
         .decision-ok { background-color: #28a745; color: white; font-weight: bold; font-size: 1.1em; }
         .decision-fail { background-color: #dc3545; color: white; font-weight: bold; font-size: 1.1em; }
         
-        /* Séparation visuelle entre les étudiants */
         tr:hover { background-color: #f1f1f1; }
     </style>
 </head>
 <body>
-    <h2>Jury de passage BUT1 (Détail par UE)</h2>
-    <ul>
-        <li><span style="background-color:#c6efce; padding:2px 5px;">VALIDÉ</span> : Moyenne UE ≥ 10</li>
-        <li><span style="background-color:#ffeb9c; padding:2px 5px;">COMPENSABLE</span> : 8 ≤ Moyenne UE < 10 (Doit être compensé par d'autres UE)</li>
-        <li><span style="background-color:#ffc7ce; padding:2px 5px;">NON VALIDÉ</span> : Moyenne UE < 8 (Éliminatoire)</li>
-    </ul>
+    <h2>Détail Jury Annuel BUT1</h2>
     
     <table>
     <thead>
         <tr>
-            <th rowspan="2">Nom</th>
-            <th rowspan="2">Prénom</th>
+            <th rowspan="2" style="width: 150px;">Étudiant</th>
 """
 
-# --- CRÉATION DES EN-TÊTES ---
-# On crée une super-colonne par UE qui englobe "Moyenne" et "État"
-for ue in toutes_les_ues:
-    html_content += f'<th colspan="2" style="border-bottom: 2px solid white;">{ue}</th>'
+# Pour chaque UE Racine, on crée un titre qui s'étend sur 4 colonnes
+for ue in ues_racines:
+    html_content += f'<th colspan="4">{ue} (Annuel)</th>'
 
-html_content += '<th rowspan="2">DÉCISION<br>PASSAGE</th></tr><tr>'
+html_content += '<th rowspan="2">DÉCISION</th></tr>'
 
-# Sous-colonnes pour chaque UE
-for ue in toutes_les_ues:
-    html_content += '<th>Moyenne</th><th>État</th>'
-
+# -- LIGNE 2 : Les sous-colonnes (S1, S2, Moy, État) --
+html_content += '<tr>'
+for ue in ues_racines:
+    # On suppose que les sous-UEs s'appellent UE1.1 et UE1.2
+    html_content += f'<th>{ue}.1</th><th>{ue}.2</th><th>Moy</th><th>État</th>'
 html_content += '</tr></thead><tbody>'
 
 # --- REMPLISSAGE DU TABLEAU ---
-for (nom, prenom), notes_ues in eleves_dict.items():
+for (nom, prenom) in etudiants_uniques:
     
-    # Calcul de la décision globale (Jury)
-    decision_texte, decision_class = calculer_decision_annee(notes_ues)
+    # On prépare une liste pour stocker les moyennes annuelles de cet étudiant
+    # Cela servira à calculer la décision finale (Passage ou non)
+    moyennes_annuelles_etudiant = []
     
-    # Mapping des classes CSS pour la décision finale
-    final_css = "decision-ok" if decision_class == "excellent" else "decision-fail"
+    # Début de la ligne HTML pour l'étudiant
+    ligne_html_etudiant = f"<tr><td style='text-align:left; padding-left:10px;'><b>{nom}</b> {prenom}</td>"
+    
+    # Pour chaque UE Racine (UE1, UE2...)
+    for racine in ues_racines:
+        nom_ue_s1 = f"{racine}.1"
+        nom_ue_s2 = f"{racine}.2"
+        
+        # Récupération des notes (0.0 par défaut si manquant)
+        note_s1 = notes.get((nom, prenom, nom_ue_s1), 0.0)
+        note_s2 = notes.get((nom, prenom, nom_ue_s2), 0.0)
+        
+        # Calcul Moyenne Annuelle
+        moyenne_annuelle = (note_s1 + note_s2) / 2
+        
+        # On ajoute à la liste pour la décision finale
+        moyennes_annuelles_etudiant.append(moyenne_annuelle)
+        
+        # Détermination de l'état (Validé/Compensé/Echec)
+        txt_etat, class_etat = determiner_etat_ue(moyenne_annuelle)
+        
+        # -- Ajout des 4 cellules dans le HTML --
+        # 1. Note Semestre 1
+        ligne_html_etudiant += f'<td class="col-semestre">{round(note_s1, 2)}</td>'
+        # 2. Note Semestre 2
+        ligne_html_etudiant += f'<td class="col-semestre">{round(note_s2, 2)}</td>'
+        # 3. Moyenne Annuelle (Mise en valeur)
+        ligne_html_etudiant += f'<td class="col-moyenne">{round(moyenne_annuelle, 2)}</td>'
+        # 4. État
+        ligne_html_etudiant += f'<td class="{class_etat}">{txt_etat}</td>'
 
-    html_content += f"<tr><td><b>{nom}</b></td><td>{prenom}</td>"
+    txt_decision, class_decision = calculer_decision_passage(moyennes_annuelles_etudiant)
+    ligne_html_etudiant += f'<td class="{class_decision}">{txt_decision}</td></tr>'
     
-    # Boucle sur chaque UE pour afficher Note ET État
-    for ue in toutes_les_ues:
-        if ue in notes_ues:
-            note_finale = float(notes_ues[ue])
-            
-            # On détermine l'état de CETTE UE spécifiquement
-            etat_texte, css_class = determiner_etat_ue(note_finale)
-            
-            # 1. Cellule Moyenne
-            html_content += f'<td>{round(note_finale, 2)}</td>'
-            # 2. Cellule État
-            html_content += f'<td class="{css_class}">{etat_texte}</td>'
-        else:
-            # Si pas de note
-            html_content += "<td>-</td><td>-</td>"
-
-    # Colonne finale : Décision du jury
-    html_content += f'<td class="{final_css}">{decision_texte}</td>'
-    html_content += "</tr>"
+    html_content += ligne_html_etudiant
 
 html_content += """
     </tbody>
@@ -285,10 +272,4 @@ html_content += """
 with open("mes_notes.html", "w", encoding="utf-8") as file:
     file.write(html_content)
 
-print("Le fichier 'mes_notes.html' a été généré avec le détail par UE (Note + État) !")
-
-# Écriture dans le fichier
-with open("mes_notes.html", "w", encoding="utf-8") as file:
-    file.write(html_content)
-
-print("Le fichier 'mes_notes.html' a été mis à jour avec les règles de passage BUT !")
+print("Le fichier 'mes_notes.html' a été généré avec tout le détail (S1, S2, Moyenne, État) !")
