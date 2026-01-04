@@ -272,4 +272,4 @@ html_content += """
 with open("mes_notes.html", "w", encoding="utf-8") as file:
     file.write(html_content)
 
-print("Le fichier 'mes_notes.html' a été généré avec tout le détail (S1, S2, Moyenne, État) !")
+print("Le fichier 'mes_notes.html' a été généré avec succès.")
