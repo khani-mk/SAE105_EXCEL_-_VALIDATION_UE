@@ -10,7 +10,9 @@ Welcome to EXCEL CALCUL UE's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   content/code
+   content/objectifs
+   content/cahier_des_charges
 
 Indices and tables
 ==================
