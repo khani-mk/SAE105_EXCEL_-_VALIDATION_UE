@@ -6,7 +6,7 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'EXCEL CALCUL UE'
+project = 'EXCEL_CALCUL_UE_PROJET'
 copyright = '2026, REMI CAMELIO KARIM HANI'
 author = 'REMI CAMELIO KARIM HANI'
 

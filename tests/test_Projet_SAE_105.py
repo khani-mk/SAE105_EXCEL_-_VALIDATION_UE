@@ -75,7 +75,44 @@ def lire_fichier_excel(fichier , Dossier_semestre):
         }
         note_matiere.append(note)   
     return note_matiere
-   
+
+
+def determiner_etat_ue(note):
+    """
+    Détermine l'état d'une UE selon sa moyenne annuelle.
+    """
+    if note >= 10:
+        return "VALIDÉ", "ue-validee"
+    elif note >= 8:
+        return "COMPENSABLE", "ue-compensee"
+    else:
+        return "NON VALIDÉ", "ue-echec"
+
+def calculer_decision_passage(liste_moyennes_annuelles):
+    """
+    Règles de passage BUT sur les MOYENNES ANNUELLES :
+    1. Aucune UE < 8 (Pas de 'NON VALIDÉ')
+    2. Au moins 2 UE >= 10
+    """
+    # S'il n'y a aucune note
+    if not liste_moyennes_annuelles:
+        return "Incomplet", "decision-fail"
+
+    # 1. Vérification éliminatoire (< 8)
+    if any(note < 8 for note in liste_moyennes_annuelles):
+        return "REFUSÉ (UE < 8)", "decision-fail"
+    
+    # 2. Comptage des UE validées (>= 10)
+    nb_ue_validees = sum(1 for note in liste_moyennes_annuelles if note >= 10)
+    
+    # Règle : Il faut au moins 2 UE >= 10
+    if nb_ue_validees >= 2:
+        return "ADMIS (Passage BUT2)", "decision-ok"
+    else:
+        return "REFUSÉ (Manque UE > 10)", "decision-fail"
+
+
+
 #Début du programme principal
 # Lecture du fichier des coefs  
 tableau_coef = lecture_du_fichier_coef_dico(fichier_de_ref)
@@ -125,39 +162,9 @@ ues_racines = sorted(list({ue.split('.')[0] for ue in liste_ue}))
 etudiants_uniques = sorted(list(set((k[0], k[1]) for k in notes.keys())))
 
 
-def determiner_etat_ue(note):
-    """
-    Détermine l'état d'une UE selon sa moyenne annuelle.
-    """
-    if note >= 10:
-        return "VALIDÉ", "ue-validee"
-    elif note >= 8:
-        return "COMPENSABLE", "ue-compensee"
-    else:
-        return "NON VALIDÉ", "ue-echec"
 
-def calculer_decision_passage(liste_moyennes_annuelles):
-    """
-    Règles de passage BUT sur les MOYENNES ANNUELLES :
-    1. Aucune UE < 8 (Pas de 'NON VALIDÉ')
-    2. Au moins 2 UE >= 10
-    """
-    # S'il n'y a aucune note
-    if not liste_moyennes_annuelles:
-        return "Incomplet", "decision-fail"
 
-    # 1. Vérification éliminatoire (< 8)
-    if any(note < 8 for note in liste_moyennes_annuelles):
-        return "REFUSÉ (UE < 8)", "decision-fail"
-    
-    # 2. Comptage des UE validées (>= 10)
-    nb_ue_validees = sum(1 for note in liste_moyennes_annuelles if note >= 10)
-    
-    # Règle : Il faut au moins 2 UE >= 10
-    if nb_ue_validees >= 2:
-        return "ADMIS (Passage BUT2)", "decision-ok"
-    else:
-        return "REFUSÉ (Manque UE > 10)", "decision-fail"
+
 
 
 # GÉNÉRATION DU HTML 
