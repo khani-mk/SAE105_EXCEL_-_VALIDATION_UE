@@ -1,5 +1,6 @@
 import openpyxl
 import os
+from pathlib import Path
 
 """
 On import les modules openpyxl et os.
@@ -145,14 +146,21 @@ def calculer_decision_passage(liste_moyennes_annuelles):
 
 
 # --- PROGRAMME PRINCIPAL (Protégé pour Sphinx) ---
-if __name__ == "__main__":
     
     #CHEMIN DES FICHIERS EXCEL
-    fichier_de_ref = '/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/data/coefficients/Coef.xlsx'
+if __name__ == "__main__":
+    
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    # 2. On reconstruit les chemins à partir de cette base
+    # Exemple: dossier actuel / data / coefficients / Coef.xlsx
+    fichier_de_ref = BASE_DIR / 'data' / 'coefficients' / 'Coef.xlsx'
 
     dossiers_notes = []
-    dossiers_notes.append('/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/data/notes/notes_S1')
-    dossiers_notes.append('/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/data/notes/notes_S2')
+    dossiers_notes.append(BASE_DIR / 'data' / 'notes' / 'notes_S1')
+    dossiers_notes.append(BASE_DIR / 'data' / 'notes' / 'notes_S2')
+    
+    # Le fichier de sortie HTML
+    fichier_sortie_html = BASE_DIR / 'html' / 'mes_notes.html'
 
     #INITIALISATION DES TABLEAUX
     tableau_coef = []
@@ -258,7 +266,7 @@ if __name__ == "__main__":
     </html>
     """
 
-    with open("/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/html/mes_notes.html", "w", encoding="utf-8") as file:
+    with open(fichier_sortie_html, "w", encoding="utf-8") as file:
         file.write(html_content)
 
-    print("Le fichier 'mes_notes.html' a été généré avec succès.")
+    print(f"Le fichier a été généré avec succès ici : {fichier_sortie_html}")
