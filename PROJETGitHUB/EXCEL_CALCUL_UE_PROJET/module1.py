@@ -1,5 +1,6 @@
 import openpyxl
 import os
+from pathlib import Path
 
 """
 On import les modules openpyxl et os.
@@ -205,16 +206,17 @@ def main():
     * **On ajoutes toute la ligne HTML de l'étudiant au contenu global**.
     """
     
-    #CHEMIN DES FICHIERS EXCEL
-    fichier_de_ref = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    # 2. On reconstruit les chemins à partir de cette base
+    # Exemple: dossier actuel / data / coefficients / Coef.xlsx
+    fichier_de_ref = BASE_DIR / 'data' / 'coefficients' / 'Coef.xlsx'
 
-    #On créait un tableau vide pour mettre les données qu'on va vouloir utiliser
     dossiers_notes = []
+    dossiers_notes.append(BASE_DIR / 'data' / 'notes' / 'notes_S1')
+    dossiers_notes.append(BASE_DIR / 'data' / 'notes' / 'notes_S2')
     
-    #Chemin pour accéder au note des S1 et S2
-    #on met les données qui sont dans le fichier notes_S1 et notes_S2 dans le tableau que l'on vient de créer 
-    dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S1')
-    dossiers_notes.append('/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S2')
+    # Le fichier de sortie HTML
+    fichier_sortie_html = BASE_DIR / 'html' / 'mes_notes.html'
 
     #INITIALISATION DES TABLEAUX
     tableau_coef = []
@@ -334,7 +336,7 @@ def main():
     </html>
     """
 
-    with open("/workspaces/SAE105_EXCEL_-_VALIDATION_UE/html/mes_notes.html", "w", encoding="utf-8") as file:
+    with open(fichier_sortie_html, "w", encoding="utf-8") as file:
         file.write(html_content)
 
     print("Le fichier 'mes_notes.html' a été généré avec succès.")
