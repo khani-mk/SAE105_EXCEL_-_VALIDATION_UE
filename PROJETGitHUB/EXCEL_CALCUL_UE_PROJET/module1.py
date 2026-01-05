@@ -17,7 +17,7 @@ def lecture_du_fichier_coef_dico(fichier_coef):
     
     1. **Création d'un tableau vide** pour l'utiliser par la suite.
     2. **On va aller ouvrir le fichier de refs** (le fichier Excel qui contient les coef).
-    3. **Python lit la première ligne** de mon fichier Excel de ref qui contient les coefs (les entêtes).
+    3. **Python lit la première ligne** de mon fichier Excel de ref qui contient les coefs (les entetes).
     4. **On va faire une boucle** pour lire les données qui sont dans le fichiers.
     5. **Le zip** c'est pour dire que 'Matière'(entetes) : 'Maths' (ligne) , 'Coef'(entetes) : 3(ligne).
     6. **Et on transforme ca en dictionnaire**.
@@ -149,9 +149,61 @@ def determiner_etat_ue(note):
         return "NON VALIDÉ", "ue-echec"
 
 
+def main():
+    """
+    PROGRAMME PRINCIPAL.
 
-# --- PROGRAMME PRINCIPAL  ---
-if __name__ == "__main__":
+    **Ce que fait cette partie du code :**
+    
+    1. **CHEMIN DES FICHIERS EXCEL** : fichier_de_ref = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'
+    2. **On créait un tableau vide** pour mettre les données qu'on va vouloir utiliser (dossiers_notes).
+    3. **Chemin pour accéder au note des S1 et S2**.
+    4. **on met les données qui sont dans le fichier notes_S1 et notes_S2** dans le tableau que l'on vient de créer.
+    5. **INITIALISATION DES TABLEAUX** : tableau_coef, note_matiere, Gros_Tableau_Notes, notes.
+    6. **Lecture du fichier des coefs sous forme d'un dictionnaire**.
+    7. **Lecture des fichiers des notes des étudiants**.
+    8. **On va renvoier la liste des fichiers qui sont dans le tableau dossier_notes**.
+    9. **dans le tableau Gros_Tableau_Notes on rajoute les données de fichier et de dossier_notes**.
+    10. **liste des UE** : on va parcourir tableau_coef et pour chaque case ou y a écrit "Unité_d_Enseignement" on garde la valeur.
+    11. **On fait la meme chose mais pour "Semestre"**.
+    12. **on fait une boucle pour traiter tout les UE qui sont dans le liste_ue qui est dans le tableau_coef**.
+    13. **on met en place des filtres**, **on fait une deuxième boucle**.
+    14. **matiere_ue** : on va donner l'UE en fonction de la matière.
+    15. **matiere_fichier** : on va donner la matière grace a la colonne fichier.
+    16. **matiere_coef** : on va dire les coefs de la matière.
+    17. **on filtre et on veut que ca soit uniquement les matières qui appartiennent a ue**.
+    18. **on fait un boucle pour faire tout les élèves qui sont dans Gros_Tableau_Notes**.
+    19. **la cle est utilisé pour identifier chaque élève dans le tableau Gros_Tableau_Notes**.
+    20. **on vérifie si la note de l'élève dans la matière qui correspond bien a une matière**.
+    21. **si la cle n'est pas dans notes on met 0**.
+    22. **si la cle est dans note on va faire le calcul pour chaque élève**.
+    23. **On va utiliser ca pour créer les colonnes des tabeaux** , donc on va suppimer les doublons et on va garder uniquement UE1.1 UE1.2 etc.
+    24. **on va faire la même chose pour les étudiants** , on garde un seul et unique étudiant.
+
+    **GÉNÉRATION DU HTML :**
+
+    * **GÉNÉRATION DU HTML** : on prépare la structure HTML.
+    * **on parcourt chaque UE dans ues_racines**.
+    * **on ajoute <th> sur 4 colonnes pour chaque UE**.
+    * **on ajoute 2 colonne pour dire la décission**.
+    * **créait 4 colonnes avec les semestre 1 , 2 la moyenne annuelle et état de l'UE**.
+    * **on fait une boucle** (sur les étudiants).
+    * **on fait un tableau vide pour stocker les moyennes des étudiants**.
+    * **on met le Nom et Prénoim dans la première colonne**.
+    * **on fait une boucle** (sur les UE).
+    * **on construit le nom de la colonne pour UE 1** (et UE 2).
+    * **on récupère le nom , prénom pour ue au S1 ou 0.0 si ca existe pas**.
+    * **on fait le calcul des moyenne de UE**.
+    * **on ajoute cette moyenne annuelle à la liste des moyennes de l'étudiants**.
+    * **on détremine le texte d'état de l'UE ( Validé / non validé)**.
+    * **On ajoute dans la ligne HTML la note du S1, arrondie à 2 décimales**.
+    * **On ajoute dans la ligne HTML la note du S2, arrondie à 2 décimales**.
+    * **On ajoute la moyenne annuelle de l'UE, arrondie à 2 décimales**.
+    * **on ajoute l'état de l'UE avec la classe css qui correspond à cet état**.
+    * **On calcule la décission global de passage en fonction des moyennes annuelles**.
+    * **On ajoute la décission de passage dans la dernière colonne**.
+    * **On ajoutes toute la ligne HTML de l'étudiant au contenu global**.
+    """
     
     #CHEMIN DES FICHIERS EXCEL
     fichier_de_ref = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'
@@ -260,20 +312,20 @@ if __name__ == "__main__":
         for racine in ues_racines:
             nom_ue_s1 = f"{racine}.1" # on construit le nom de la colonne pour UE 1
             nom_ue_s2 = f"{racine}.2" # on construit le nom de la colonne pour UE 1
-            note_s1 = notes.get((nom, prenom, nom_ue_s1), 0.0)
-            note_s2 = notes.get((nom, prenom, nom_ue_s2), 0.0)
-            moyenne_annuelle = (note_s1 + note_s2) / 2
-            moyennes_annuelles_etudiant.append(moyenne_annuelle)
-            txt_etat, class_etat = determiner_etat_ue(moyenne_annuelle)
+            note_s1 = notes.get((nom, prenom, nom_ue_s1), 0.0) #on récupère le nom , prénom pour ue au S1 ou 0.0 si ca existe pas 
+            note_s2 = notes.get((nom, prenom, nom_ue_s2), 0.0) #on récupère le nom , prénom pour ue au S2 ou 0.0 si ca existe pas 
+            moyenne_annuelle = (note_s1 + note_s2) / 2 # on fait le calcul des moyenne de UE 
+            moyennes_annuelles_etudiant.append(moyenne_annuelle) #on ajoute cette moyenne annuelle à la liste des moyennes de l'étudiants
+            txt_etat, class_etat = determiner_etat_ue(moyenne_annuelle) # on détremine le texte d'état de l'UE ( Validé / non validé)
             
-            ligne_html_etudiant += f'<td class="col-semestre">{round(note_s1, 2)}</td>'
-            ligne_html_etudiant += f'<td class="col-semestre">{round(note_s2, 2)}</td>'
-            ligne_html_etudiant += f'<td class="col-moyenne">{round(moyenne_annuelle, 2)}</td>'
-            ligne_html_etudiant += f'<td class="{class_etat}">{txt_etat}</td>'
+            ligne_html_etudiant += f'<td class="col-semestre">{round(note_s1, 2)}</td>' # On ajoute dans la ligne HTML la note du S1, arrondie à 2 décimales
+            ligne_html_etudiant += f'<td class="col-semestre">{round(note_s2, 2)}</td>' # On ajoute dans la ligne HTML la note du S2, arrondie à 2 décimales
+            ligne_html_etudiant += f'<td class="col-moyenne">{round(moyenne_annuelle, 2)}</td>' # On ajoute la moyenne annuelle de l'UE, arrondie à 2 décimales
+            ligne_html_etudiant += f'<td class="{class_etat}">{txt_etat}</td>' # on ajoute l'état de l'UE avec la classe css qui correspond à cet état
 
-        txt_decision, class_decision = calculer_decision_passage(moyennes_annuelles_etudiant)
-        ligne_html_etudiant += f'<td class="{class_decision}">{txt_decision}</td></tr>'
-        html_content += ligne_html_etudiant
+        txt_decision, class_decision = calculer_decision_passage(moyennes_annuelles_etudiant) # On calcule la décission global de passage en fonction des moyennes annuelles
+        ligne_html_etudiant += f'<td class="{class_decision}">{txt_decision}</td></tr>' #On ajoute la décission de passage dans la dernière colonne 
+        html_content += ligne_html_etudiant # On ajoutes toute la ligne HTML de l'étudiant au contenu global
 
     html_content += """
         </tbody>
@@ -286,3 +338,7 @@ if __name__ == "__main__":
         file.write(html_content)
 
     print("Le fichier 'mes_notes.html' a été généré avec succès.")
+
+# --- Point d'entrée du script ---
+if __name__ == "__main__":
+    main()
