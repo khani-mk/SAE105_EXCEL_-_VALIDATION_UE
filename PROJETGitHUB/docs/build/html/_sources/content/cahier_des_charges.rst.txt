@@ -2,3 +2,79 @@ Cahier des Charges
 ==================
 
 Ici , je décrirai le cahier des charges
+
+
+
+
+
+
+
+
+
+
+""""""
+Le projet a pour objectif d’analyser des fichiers excel .xls comportant les notes d’une promo d’étudiants afin de produire pour chaque étudiant, les moyennes de chaque unité d’enseignement ainsi que leur état de validation. Le résultat sera présenté dans un page html/css.
+
+Les fichiers seront fournis sous forme de fichiers .xls (un fichier par ressource ou SAÉ) mis à votre disposition par l’enseignant. Les étapes principales du projet consistent à :
+
+lire et extraire les données pertinentes des fichiers excel ;
+
+les traiter afin de pouvoir produire les moyennes d’UE et l’état de validation des UE ;
+
+de construire une page html/css :
+Le projet doit :
+
+utiliser l’outil de gestion de version Git et un IDE de développement Python ;
+
+être structuré suivant l’arborescence indiquée ci-après
+
+pouvoir s’exécuter sur le système Linux des salle de TP lors de la démonstration finale ;
+
+être documenté :
+
+    description du projet au format restructuredText,
+
+    commentaires pertinents dans le code (si utile à la compréhension),
+
+    commentaires des fonctions développées
+
+comporter un répertoire de test où toutes les fonctions Python développées auront un code test unitaire
+Environnement de développement et dépôt GIT
+Le projet est rattaché à un dépôt GIT que vous aurez créé sur GitHub et à la livraison de vos codes informatiques. Le dépôt devra absolument être remis lors de la livraison finale du projet. Le versionnement étant tracé et daté, il servira pour l’évaluation du travail.
+
+Langages de scripting/programmation
+Le projet doit utiliser :
+
+le langage de programmation Python (version > 3.7) pour les codes sources gérant la lecture, l’analyse, le traitement des données et la présentation des traitements.
+
+et/ou le langage de script bash pour les scripts permettant l’automatisation de certains traitements et de la publication des résultats (vu en R108-Base des systèmes d’exploitation)
+Arborescence du projet
+Votre projet doit :
+
+être exécuté par le biais d’un script nom_projet.py. Ce script reprendra la structure classique des programmes vue en R107-Fondamentaux de la programmation et décrite dans le formulaire Python. Il prendra d’éventuels paramètres en arguments spécifiés ci-après.
+
+respecter l’arborescence suivante (PROJETGitHUB désigne le répertoire auquel est rattaché votre projet et constitue la base du dépôt local Git) :
+Paramètres en argument du programme principal
+Votre programme devra prendre en argument le chemin du répertoire contenant tous les fichiers de notes de ressources/SAÉ et le répertoire dans lequel sera générée la page web :
+
+./nom_projet.py --files-dir dir_notes --output-dir ./../html/
+Documentation
+La documentation générale du projet devra être écrite au format restructuredText. Vous pourrez pour cela vous appuyer sur le logiciel Sphinx ;
+
+Il conviendra d’ajouter des commentaires doctrings en début de fonction afin de :
+
+préciser ce que fait la fonction,
+
+d’indiquer son auteur, ses dates de création et de dernière modification,
+
+décrire ses paramètres et le cas échéant leurs types,
+
+décrire les bornes d’utilisation de paramètres pour un bon fonctionnement de la fonction et exceptions qui sont suceptibles d’être levées,
+
+ce qu’elle retourne
+
+donner un exemple d’utilisation
+
+Tests unitaires
+En vous inspirant du TP sur les fonctions, vous devrez écrire un code de test de chaque fonction développée dans le projet. Celui-ci sera placé dans un programme Python du répertoire tests.
+
