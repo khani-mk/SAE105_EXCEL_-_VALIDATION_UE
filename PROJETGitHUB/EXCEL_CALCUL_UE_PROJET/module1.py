@@ -181,6 +181,7 @@ if __name__ == "__main__":
             Gros_Tableau_Notes = Gros_Tableau_Notes + lire_fichier_excel(fichier , dossier_notes)
 
     # liste des UE
+    #on va dire 
     liste_ue = list({item["Unité_d_Enseignement"] for item in tableau_coef})
     liste_semestre = list({item["Semestre"] for item in tableau_coef})
 
