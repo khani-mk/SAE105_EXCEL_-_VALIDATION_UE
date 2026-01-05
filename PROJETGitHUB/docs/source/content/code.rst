@@ -1,5 +1,5 @@
 Documentation du code
 *********************
 
-.. automodule:: Projet_SAE_105
+.. automodule:: module1
    :members:

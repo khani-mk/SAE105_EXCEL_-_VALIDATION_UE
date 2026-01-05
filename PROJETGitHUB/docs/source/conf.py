@@ -1,6 +1,6 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../../Projet_SAE105_Validation_UE'))
+sys.path.insert(0, os.path.abspath('../../EXCEL_CALCUL_UE_PROJET'))
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:

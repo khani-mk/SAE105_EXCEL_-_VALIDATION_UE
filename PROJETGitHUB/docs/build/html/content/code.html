@@ -34,11 +34,11 @@
 
           <div class="body" role="main">
             
-  <section id="module-Projet_SAE_105">
-<span id="documentation-du-code"></span><h1>Documentation du code<a class="headerlink" href="#module-Projet_SAE_105" title="Lien permanent vers cette rubrique">¶</a></h1>
+  <section id="module-module1">
+<span id="documentation-du-code"></span><h1>Documentation du code<a class="headerlink" href="#module-module1" title="Lien permanent vers cette rubrique">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="Projet_SAE_105.calculer_decision_passage">
-<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">calculer_decision_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">liste_moyennes_annuelles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#calculer_decision_passage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.calculer_decision_passage" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="module1.calculer_decision_passage">
+<span class="sig-prename descclassname"><span class="pre">module1.</span></span><span class="sig-name descname"><span class="pre">calculer_decision_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">liste_moyennes_annuelles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/module1.html#calculer_decision_passage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#module1.calculer_decision_passage" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Règles de passage BUT sur les MOYENNES ANNUELLES :</p>
 <ol class="arabic simple">
 <li><p>Aucune UE &lt; 8 (Pas de 'NON VALIDÉ')</p></li>
@@ -47,8 +47,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Projet_SAE_105.determiner_etat_ue">
-<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">determiner_etat_ue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#determiner_etat_ue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.determiner_etat_ue" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="module1.determiner_etat_ue">
+<span class="sig-prename descclassname"><span class="pre">module1.</span></span><span class="sig-name descname"><span class="pre">determiner_etat_ue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/module1.html#determiner_etat_ue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#module1.determiner_etat_ue" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>Détermine l'état d'une UE selon sa moyenne annuelle.</p>
 <ul class="simple">
 <li><p>Si note &gt;= 10 : VALIDÉ</p></li>
@@ -58,14 +58,14 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Projet_SAE_105.lecture_du_fichier_coef_dico">
-<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">lecture_du_fichier_coef_dico</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier_coef</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#lecture_du_fichier_coef_dico"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.lecture_du_fichier_coef_dico" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="module1.lecture_du_fichier_coef_dico">
+<span class="sig-prename descclassname"><span class="pre">module1.</span></span><span class="sig-name descname"><span class="pre">lecture_du_fichier_coef_dico</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier_coef</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/module1.html#lecture_du_fichier_coef_dico"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#module1.lecture_du_fichier_coef_dico" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>FONCTION POUR LIRE LE FICHIER EXCEL DES COEFS.</p>
 <p><strong>Explication du code :</strong></p>
 <ol class="arabic simple">
 <li><p><strong>Création d'un tableau vide</strong> pour l'utiliser par la suite.</p></li>
 <li><p><strong>On va aller ouvrir le fichier de refs</strong> (le fichier Excel qui contient les coef).</p></li>
-<li><p><strong>Python lit la première ligne</strong> de mon fichier Excel de ref qui contient les coefs (les entêtes).</p></li>
+<li><p><strong>Python lit la première ligne</strong> de mon fichier Excel de ref qui contient les coefs (les entetes).</p></li>
 <li><p><strong>On va faire une boucle</strong> pour lire les données qui sont dans le fichiers.</p></li>
 <li><p><strong>Le zip</strong> c'est pour dire que 'Matière'(entetes) : 'Maths' (ligne) , 'Coef'(entetes) : 3(ligne).</p></li>
 <li><p><strong>Et on transforme ca en dictionnaire</strong>.</p></li>
@@ -83,8 +83,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="Projet_SAE_105.lire_fichier_excel">
-<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">lire_fichier_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Dossier_semestre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#lire_fichier_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.lire_fichier_excel" title="Lien permanent vers cette définition">¶</a></dt>
+<dt class="sig sig-object py" id="module1.lire_fichier_excel">
+<span class="sig-prename descclassname"><span class="pre">module1.</span></span><span class="sig-name descname"><span class="pre">lire_fichier_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Dossier_semestre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/module1.html#lire_fichier_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#module1.lire_fichier_excel" title="Lien permanent vers cette définition">¶</a></dt>
 <dd><p>FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS.</p>
 <p><strong>Explication du code :</strong></p>
 <ol class="arabic simple">
@@ -111,6 +111,63 @@
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="module1.main">
+<span class="sig-prename descclassname"><span class="pre">module1.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/module1.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#module1.main" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>PROGRAMME PRINCIPAL.</p>
+<p><strong>Ce que fait cette partie du code :</strong></p>
+<ol class="arabic simple">
+<li><p><strong>CHEMIN DES FICHIERS EXCEL</strong> : <code class="docutils literal notranslate"><span class="pre">fichier_de_ref</span> <span class="pre">=</span> <span class="pre">'/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'</span></code></p></li>
+<li><p><strong>On créait un tableau vide</strong> pour mettre les données qu'on va vouloir utiliser (dossiers_notes).</p></li>
+<li><p><strong>Chemin pour accéder au note des S1 et S2</strong>.</p></li>
+<li><p><strong>on met les données qui sont dans le fichier notes_S1 et notes_S2</strong> dans le tableau que l'on vient de créer.</p></li>
+<li><p><strong>INITIALISATION DES TABLEAUX</strong> : tableau_coef, note_matiere, Gros_Tableau_Notes, notes.</p></li>
+<li><p><strong>Lecture du fichier des coefs sous forme d'un dictionnaire</strong>.</p></li>
+<li><p><strong>Lecture des fichiers des notes des étudiants</strong>.</p></li>
+<li><p><strong>On va renvoier la liste des fichiers qui sont dans le tableau dossier_notes</strong>.</p></li>
+<li><p><strong>dans le tableau Gros_Tableau_Notes on rajoute les données de fichier et de dossier_notes</strong>.</p></li>
+<li><p><strong>liste des UE</strong> : on va parcourir tableau_coef et pour chaque case ou y a écrit &quot;Unité_d_Enseignement&quot; on garde la valeur.</p></li>
+<li><p><strong>On fait la meme chose mais pour &quot;Semestre&quot;</strong>.</p></li>
+<li><p><strong>on fait une boucle pour traiter tout les UE qui sont dans le liste_ue qui est dans le tableau_coef</strong>.</p></li>
+<li><p><strong>on met en place des filtres</strong>, <strong>on fait une deuxième boucle</strong>.</p></li>
+<li><p><strong>matiere_ue</strong> : on va donner l'UE en fonction de la matière.</p></li>
+<li><p><strong>matiere_fichier</strong> : on va donner la matière grace a la colonne fichier.</p></li>
+<li><p><strong>matiere_coef</strong> : on va dire les coefs de la matière.</p></li>
+<li><p><strong>on filtre et on veut que ca soit uniquement les matières qui appartiennent a ue</strong>.</p></li>
+<li><p><strong>on fait un boucle pour faire tout les élèves qui sont dans Gros_Tableau_Notes</strong>.</p></li>
+<li><p><strong>la cle est utilisé pour identifier chaque élève dans le tableau Gros_Tableau_Notes</strong>.</p></li>
+<li><p><strong>on vérifie si la note de l'élève dans la matière qui correspond bien a une matière</strong>.</p></li>
+<li><p><strong>si la cle n'est pas dans notes on met 0</strong>.</p></li>
+<li><p><strong>si la cle est dans note on va faire le calcul pour chaque élève</strong>.</p></li>
+<li><p><strong>On va utiliser ca pour créer les colonnes des tabeaux</strong> , donc on va suppimer les doublons et on va garder uniquement UE1.1 UE1.2 etc.</p></li>
+<li><p><strong>on va faire la même chose pour les étudiants</strong> , on garde un seul et unique étudiant.</p></li>
+</ol>
+<p><strong>GÉNÉRATION DU HTML :</strong></p>
+<ul class="simple">
+<li><p><strong>GÉNÉRATION DU HTML</strong> : on prépare la structure HTML.</p></li>
+<li><p><strong>on parcourt chaque UE dans ues_racines</strong>.</p></li>
+<li><p><strong>on ajoute &lt;th&gt; sur 4 colonnes pour chaque UE</strong>.</p></li>
+<li><p><strong>on ajoute 2 colonne pour dire la décission</strong>.</p></li>
+<li><p><strong>créait 4 colonnes avec les semestre 1 , 2 la moyenne annuelle et état de l'UE</strong>.</p></li>
+<li><p><strong>on fait une boucle</strong> (sur les étudiants).</p></li>
+<li><p><strong>on fait un tableau vide pour stocker les moyennes des étudiants</strong>.</p></li>
+<li><p><strong>on met le Nom et Prénoim dans la première colonne</strong>.</p></li>
+<li><p><strong>on fait une boucle</strong> (sur les UE).</p></li>
+<li><p><strong>on construit le nom de la colonne pour UE 1</strong> (et UE 2).</p></li>
+<li><p><strong>on récupère le nom , prénom pour ue au S1 ou 0.0 si ca existe pas</strong>.</p></li>
+<li><p><strong>on fait le calcul des moyenne de UE</strong>.</p></li>
+<li><p><strong>on ajoute cette moyenne annuelle à la liste des moyennes de l'étudiants</strong>.</p></li>
+<li><p><strong>on détremine le texte d'état de l'UE ( Validé / non validé)</strong>.</p></li>
+<li><p><strong>On ajoute dans la ligne HTML la note du S1, arrondie à 2 décimales</strong>.</p></li>
+<li><p><strong>On ajoute dans la ligne HTML la note du S2, arrondie à 2 décimales</strong>.</p></li>
+<li><p><strong>On ajoute la moyenne annuelle de l'UE, arrondie à 2 décimales</strong>.</p></li>
+<li><p><strong>on ajoute l'état de l'UE avec la classe css qui correspond à cet état</strong>.</p></li>
+<li><p><strong>On calcule la décission global de passage en fonction des moyennes annuelles</strong>.</p></li>
+<li><p><strong>On ajoute la décission de passage dans la dernière colonne</strong>.</p></li>
+<li><p><strong>On ajoutes toute la ligne HTML de l'étudiant au contenu global</strong>.</p></li>
+</ul>
+</dd></dl>
+
 </section>
 
 
@@ -135,10 +192,11 @@
 <li class="toctree-l1"><a class="reference internal" href="cahier_des_charges.html">Cahier des Charges</a></li>
 <li class="toctree-l1"><a class="reference internal" href="objectifs.html">Objectifs du Projet</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation du code</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.calculer_decision_passage"><code class="docutils literal notranslate"><span class="pre">calculer_decision_passage()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.determiner_etat_ue"><code class="docutils literal notranslate"><span class="pre">determiner_etat_ue()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.lecture_du_fichier_coef_dico"><code class="docutils literal notranslate"><span class="pre">lecture_du_fichier_coef_dico()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.lire_fichier_excel"><code class="docutils literal notranslate"><span class="pre">lire_fichier_excel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module1.calculer_decision_passage"><code class="docutils literal notranslate"><span class="pre">calculer_decision_passage()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module1.determiner_etat_ue"><code class="docutils literal notranslate"><span class="pre">determiner_etat_ue()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module1.lecture_du_fichier_coef_dico"><code class="docutils literal notranslate"><span class="pre">lecture_du_fichier_coef_dico()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module1.lire_fichier_excel"><code class="docutils literal notranslate"><span class="pre">lire_fichier_excel()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module1.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
 </ul>
 </li>
 </ul>
