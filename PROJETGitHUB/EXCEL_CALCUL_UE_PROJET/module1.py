@@ -171,34 +171,41 @@ if __name__ == "__main__":
 
     notes = {}
 
-    # Lecture du fichier des coefs  
+    # Lecture du fichier des coefs sous forme d'un dictionnaire 
     tableau_coef = lecture_du_fichier_coef_dico(fichier_de_ref)
 
     # Lecture des fichiers des notes des étudiants
-    for dossier_notes in dossiers_notes:    
+    for dossier_notes in dossiers_notes:
+        #On va renvoier la liste des fichiers qui sont dans le tableau dossier_notes    
         for fichier in os.listdir(dossier_notes):
-            #dans le tableau Gros_Tableau_Notes on
+            #dans le tableau Gros_Tableau_Notes on rajoute les données de fichier et de dossier_notes
             Gros_Tableau_Notes = Gros_Tableau_Notes + lire_fichier_excel(fichier , dossier_notes)
 
     # liste des UE
-    #on va dire 
+    #on va parcourir tableau_coef et pour chaque case ou y a écrit "Unité_d_Enseignement" on garde la valeur
     liste_ue = list({item["Unité_d_Enseignement"] for item in tableau_coef})
+    #On fait la meme chose mais pour "Semestre"
     liste_semestre = list({item["Semestre"] for item in tableau_coef})
 
+    #on fait une boucle pour traiter tout les UE qui sont dans le liste_ue qui est dans le tableau_coef
     for ue in liste_ue:
-        for matière in tableau_coef:
-            matiere_ue = matière["Unité_d_Enseignement"]
-            matiere_fichier = matière["Fichier"]
-            matiere_coef = float(matière["Coefficient"])
-            if  matiere_ue == ue :
-                for eleve in Gros_Tableau_Notes:
-                    cle = (eleve["Nom"], eleve["Prénom"],ue)
-                    if eleve["Fichier_Matière"] == matière["Fichier"] :
-                        if cle not in notes:
-                            notes[cle] = 0
-                        notes[cle] += float(eleve["Note"]) * matiere_coef / 100
+        #on met en place des filtres
+        #on fait une deuxième boucle
+        for matière in tableau_coef: 
+            matiere_ue = matière["Unité_d_Enseignement"] #on va donner l'UE en fonction de la matière
+            matiere_fichier = matière["Fichier"] #on va donner la matière grace a la colonne fichier
+            matiere_coef = float(matière["Coefficient"]) # on va dire les coefs de la matière
+            if  matiere_ue == ue : # on filtre et on veut que ca soit uniquement les matières qui appartiennent a ue
+                for eleve in Gros_Tableau_Notes: # on fait un boucle pour faire tout les élèves qui sont dans Gros_Tableau_Notes
+                    cle = (eleve["Nom"], eleve["Prénom"],ue) # la cle est utilisé pour identifier chaque élève dans le tableau Gros_Tableau_Notes
+                    if eleve["Fichier_Matière"] == matière["Fichier"] : # on vérifie si la note de l'élève dans la matière qui correspond bien a une matière
+                        if cle not in notes: 
+                            notes[cle] = 0 # si la cle n'est pas dans notes on met 0
+                        notes[cle] += float(eleve["Note"]) * matiere_coef / 100 # si la cle est dans note on va faire le calcul pour chaque élève
 
+    #On va utiliser ca pour créer les colonnes des tabeaux , donc on va suppimer les doublons et on va garder uniquement UE1.1 UE1.2 etc
     ues_racines = sorted(list({ue.split('.')[0] for ue in liste_ue}))
+    #on va faire la même chose pour les étudiants , on garde un seul et unique étudiant
     etudiants_uniques = sorted(list(set((k[0], k[1]) for k in notes.keys())))
 
     # GÉNÉRATION DU HTML 
@@ -233,22 +240,26 @@ if __name__ == "__main__":
                 <th rowspan="2" style="width: 150px;">Étudiant</th>
     """
 
+    #on parcourt chaque UE dans ues_racines
     for ue in ues_racines:
-        html_content += f'<th colspan="4">{ue} (Annuel)</th>'
+        html_content += f'<th colspan="4">{ue} (Annuel)</th>' #on ajoute <th> sur 4 colonnes pour chaque UE
 
-    html_content += '<th rowspan="2">DÉCISION</th></tr>'
+    html_content += '<th rowspan="2">DÉCISION</th></tr>' # on ajoute 2 colonne pour dire la décission
     html_content += '<tr>'
-    for ue in ues_racines:
-        html_content += f'<th>{ue}.1</th><th>{ue}.2</th><th>Moy</th><th>État</th>'
+    for ue in ues_racines: 
+        html_content += f'<th>{ue}.1</th><th>{ue}.2</th><th>Moy</th><th>État</th>' # créait 4 colonnes avec les semestre 1 , 2 la moyenne annuelle et état de l'UE
     html_content += '</tr></thead><tbody>'
 
+
+    # on fait une boucle 
     for (nom, prenom) in etudiants_uniques:
-        moyennes_annuelles_etudiant = []
-        ligne_html_etudiant = f"<tr><td style='text-align:left; padding-left:10px;'><b>{nom}</b> {prenom}</td>"
+        moyennes_annuelles_etudiant = [] # on fait un tableau vide pour stocker les moyennes des étudiants
+        ligne_html_etudiant = f"<tr><td style='text-align:left; padding-left:10px;'><b>{nom}</b> {prenom}</td>" # on met le Nom et Prénoim dans la première colonne
         
+        #on fait une boucle
         for racine in ues_racines:
-            nom_ue_s1 = f"{racine}.1"
-            nom_ue_s2 = f"{racine}.2"
+            nom_ue_s1 = f"{racine}.1" # on construit le nom de la colonne pour UE 1
+            nom_ue_s2 = f"{racine}.2" # on construit le nom de la colonne pour UE 1
             note_s1 = notes.get((nom, prenom, nom_ue_s1), 0.0)
             note_s2 = notes.get((nom, prenom, nom_ue_s2), 0.0)
             moyenne_annuelle = (note_s1 + note_s2) / 2
