@@ -156,7 +156,7 @@ def main():
 
     **Ce que fait cette partie du code :**
     
-    1. **CHEMIN DES FICHIERS EXCEL** : ``fichier_de_ref = '/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'``
+    1. **CHEMIN DES FICHIERS EXCEL** : ``fichier_de_ref = BASE_DIR / 'data' / 'coefficients' / 'Coef.xlsx'``
     2. **On créait un tableau vide** pour mettre les données qu'on va vouloir utiliser (dossiers_notes).
     3. **Chemin pour accéder au note des S1 et S2**.
     4. **on met les données qui sont dans le fichier notes_S1 et notes_S2** dans le tableau que l'on vient de créer.
