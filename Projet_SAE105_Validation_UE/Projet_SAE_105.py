@@ -148,11 +148,11 @@ def calculer_decision_passage(liste_moyennes_annuelles):
 if __name__ == "__main__":
     
     #CHEMIN DES FICHIERS EXCEL
-    fichier_de_ref = '.ssh/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'
+    fichier_de_ref = '/home/etudiant/.ssh/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx'
 
     dossiers_notes = []
-    dossiers_notes.append('.ssh/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S1')
-    dossiers_notes.append('.ssh/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S2')
+    dossiers_notes.append('/home/etudiant/.ssh/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S1')
+    dossiers_notes.append('/home/etudiant/.ssh/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S2')
 
     #INITIALISATION DES TABLEAUX
     tableau_coef = []
@@ -258,7 +258,7 @@ if __name__ == "__main__":
     </html>
     """
 
-    with open(".ssh/SAE105_EXCEL_-_VALIDATION_UE/html/mes_notes.html", "w", encoding="utf-8") as file:
+    with open("/home/etudiant/.ssh/SAE105_EXCEL_-_VALIDATION_UE/html/mes_notes.html", "w", encoding="utf-8") as file:
         file.write(html_content)
 
     print("Le fichier 'mes_notes.html' a été généré avec succès.")
