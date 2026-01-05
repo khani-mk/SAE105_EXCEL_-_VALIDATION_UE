@@ -1,0 +1,369 @@
+
+<!DOCTYPE html>
+
+<html lang="french">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projet_SAE_105 &#8212; Documentation EXCEL_CALCUL_UE_PROJET </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Code source de Projet_SAE_105</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">openpyxl</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">On import les modules openpyxl et os.</span>
+<span class="sd">On va l&#39;utiliser pour ouvrir les fichier xlsx et ainsi les utiliser.</span>
+<span class="sd">Il va servir a donner les chemins d&#39;accès pour aller aux différents fichiers que nous allons utiliser.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># --- LES FONCTIONS ---</span>
+
+<div class="viewcode-block" id="lecture_du_fichier_coef_dico"><a class="viewcode-back" href="../content/code.html#Projet_SAE_105.lecture_du_fichier_coef_dico">[docs]</a><span class="k">def</span> <span class="nf">lecture_du_fichier_coef_dico</span><span class="p">(</span><span class="n">fichier_coef</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    FONCTION POUR LIRE LE FICHIER EXCEL DES COEFS.</span>
+
+<span class="sd">    **Explication du code :**</span>
+<span class="sd">    </span>
+<span class="sd">    1. **Création d&#39;un tableau vide** pour l&#39;utiliser par la suite.</span>
+<span class="sd">    2. **On va aller ouvrir le fichier de refs** (le fichier Excel qui contient les coef).</span>
+<span class="sd">    3. **Python lit la première ligne** de mon fichier Excel de ref qui contient les coefs (les entêtes).</span>
+<span class="sd">    4. **On va faire une boucle** pour lire les données qui sont dans le fichiers.</span>
+<span class="sd">    5. **Le zip** c&#39;est pour dire que &#39;Matière&#39;(entetes) : &#39;Maths&#39; (ligne) , &#39;Coef&#39;(entetes) : 3(ligne).</span>
+<span class="sd">    6. **Et on transforme ca en dictionnaire**.</span>
+<span class="sd">    7. **Append** : c&#39;est pour rajouter tout ca au tableau.</span>
+<span class="sd">    8. **On rempli le tableau** avec nos informations que l&#39;on vient de trouver.</span>
+
+<span class="sd">    :param fichier_coef: Le chemin du fichier Excel.</span>
+<span class="sd">    :return: Le tableau rempli avec les coefficients.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Création d&#39;un tableau vide pour l&#39;utiliser par la suite</span>
+    <span class="n">tableau_coef</span> <span class="o">=</span> <span class="p">[]</span>
+    
+    <span class="c1"># On va aller ouvrir le fichier de refs</span>
+    <span class="n">Fichier_coef</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">fichier_coef</span><span class="p">,</span> <span class="n">data_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">Onglets_coef</span> <span class="o">=</span> <span class="n">Fichier_coef</span><span class="o">.</span><span class="n">sheetnames</span>
+    <span class="n">feuille_active</span> <span class="o">=</span> <span class="n">Fichier_coef</span><span class="p">[</span><span class="n">Onglets_coef</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> 
+
+    <span class="c1"># python lit la première ligne de mon fichier Excel de ref qui contient les coefs</span>
+    <span class="n">entetes</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">feuille_active</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        
+    <span class="c1"># On va faire une boucle pour lire les données qui sont dans le fichiers</span>
+    <span class="k">for</span> <span class="n">ligne</span> <span class="ow">in</span> <span class="n">feuille_active</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">(</span>
+        <span class="n">min_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_row</span><span class="o">=</span><span class="n">feuille_active</span><span class="o">.</span><span class="n">max_row</span><span class="p">,</span>
+        <span class="n">values_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        
+        <span class="c1"># le zip c&#39;est pour dire que &#39;Matière&#39;(entetes) : &#39;Maths&#39; (ligne)</span>
+        <span class="c1"># et on transforme ca en dictionnaire</span>
+        <span class="c1"># append c&#39;est pour rajouter tout ca au tableau</span>
+        <span class="n">tableau_coef</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">entetes</span><span class="p">,</span> <span class="n">ligne</span><span class="p">)))</span>
+    
+    <span class="c1"># on rempli le tableau avec nos informations que l&#39;on vient de trouver</span>
+    <span class="k">return</span> <span class="n">tableau_coef</span></div>
+
+
+<div class="viewcode-block" id="lire_fichier_excel"><a class="viewcode-back" href="../content/code.html#Projet_SAE_105.lire_fichier_excel">[docs]</a><span class="k">def</span> <span class="nf">lire_fichier_excel</span><span class="p">(</span><span class="n">fichier</span><span class="p">,</span> <span class="n">Dossier_semestre</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS.</span>
+
+<span class="sd">    **Explication du code :**</span>
+
+<span class="sd">    1. **On créer un tableau vide** pour mettre nos valeurs dedans.</span>
+<span class="sd">    2. **Fichier_Matière** : c&#39;est pour dire que le nom de la matière c&#39;est son nom (ex : Mathematiques.xlsx).</span>
+<span class="sd">    3. **Dossier_semestre** : Meme chose pour le dossier.</span>
+<span class="sd">    4. **Fichier_Excel** : c&#39;est pour avoir le chemin complet des fichiers xlsx.</span>
+<span class="sd">    5. **[1:4]** : c&#39;est pour dire les collonnes B , C , D.</span>
+<span class="sd">    6. **On va lire les données** des fichiers xlsx.</span>
+<span class="sd">    7. **On veut la ligne min 2** et on va lire la valeurs qui est dans la case [A2] qui correspond au nombre d&#39;éléves.</span>
+<span class="sd">    8. **On fait un dictionnaire** des valeurs des entetes et des lignes qui sont présent dans le fichier.</span>
+<span class="sd">    9. **On remplie le tableau** avec les valeurs qu&#39;on vient de trouver.</span>
+
+<span class="sd">    :param fichier: Nom du fichier.</span>
+<span class="sd">    :param Dossier_semestre: Dossier contenant le fichier.</span>
+<span class="sd">    :return: Tableau des notes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># on créer un tableau vide pour mettre nos valeurs dedans</span>
+    <span class="n">note_matiere</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># c&#39;est pour dire que le nom de la matière c&#39;est son nom</span>
+    <span class="n">Fichier_Matière</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fichier</span><span class="p">)</span>
+    <span class="c1"># Meme chose pour le dossier</span>
+    <span class="n">Dossier_semestre_basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">Dossier_semestre</span><span class="p">)</span>
+
+    <span class="c1"># c&#39;est pour avoir le chemin complet des fichiers xlsx</span>
+    <span class="n">Fichier_Excel</span> <span class="o">=</span> <span class="n">openpyxl</span><span class="o">.</span><span class="n">load_workbook</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">Dossier_semestre</span><span class="p">,</span> <span class="n">fichier</span><span class="p">),</span> <span class="n">data_only</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">Onglets</span> <span class="o">=</span> <span class="n">Fichier_Excel</span><span class="o">.</span><span class="n">sheetnames</span>
+    <span class="n">feuille_active</span> <span class="o">=</span> <span class="n">Fichier_Excel</span><span class="p">[</span><span class="n">Onglets</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="c1"># [1:4] c&#39;est pour dire les collonnes B , C , D</span>
+    <span class="n">entetes</span> <span class="o">=</span> <span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">feuille_active</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+        
+    <span class="c1"># on va lire les données des ficheirs xlsx (nombre d&#39;élèves en A2)</span>
+    <span class="n">nblignes</span><span class="o">=</span> <span class="n">feuille_active</span><span class="p">[</span><span class="s1">&#39;A2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+    
+    <span class="c1"># on va lire les données dans le fichierx xlsx</span>
+    <span class="k">for</span> <span class="n">ligne</span> <span class="ow">in</span> <span class="n">feuille_active</span><span class="o">.</span><span class="n">iter_rows</span><span class="p">(</span>
+        <span class="n">min_row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_row</span><span class="o">=</span><span class="n">nblignes</span><span class="p">,</span> <span class="n">min_col</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_col</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">values_only</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        
+        <span class="c1"># on fait un dictionnaire des valeursdes entetes et des lignes</span>
+        <span class="n">note</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">entetes</span><span class="p">,</span> <span class="n">ligne</span><span class="p">))</span> <span class="o">|</span> <span class="p">{</span>
+            <span class="s2">&quot;Fichier_Matière&quot;</span><span class="p">:</span> <span class="n">Fichier_Matière</span><span class="p">,</span>
+            <span class="s2">&quot;Dossier_semestre&quot;</span><span class="p">:</span> <span class="n">Dossier_semestre_basename</span>      
+        <span class="p">}</span>
+        <span class="c1"># on remplie le tableau avec les valeurs qu&#39;on vient de trouver </span>
+        <span class="n">note_matiere</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">note</span><span class="p">)</span>   
+    <span class="k">return</span> <span class="n">note_matiere</span></div>
+
+
+<div class="viewcode-block" id="determiner_etat_ue"><a class="viewcode-back" href="../content/code.html#Projet_SAE_105.determiner_etat_ue">[docs]</a><span class="k">def</span> <span class="nf">determiner_etat_ue</span><span class="p">(</span><span class="n">note</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Détermine l&#39;état d&#39;une UE selon sa moyenne annuelle.</span>
+<span class="sd">    </span>
+<span class="sd">    * Si note &gt;= 10 : VALIDÉ</span>
+<span class="sd">    * Si note &gt;= 8 : COMPENSABLE</span>
+<span class="sd">    * Sinon : NON VALIDÉ</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">note</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;VALIDÉ&quot;</span><span class="p">,</span> <span class="s2">&quot;ue-validee&quot;</span>
+    <span class="k">elif</span> <span class="n">note</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;COMPENSABLE&quot;</span><span class="p">,</span> <span class="s2">&quot;ue-compensee&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;NON VALIDÉ&quot;</span><span class="p">,</span> <span class="s2">&quot;ue-echec&quot;</span></div>
+
+
+<div class="viewcode-block" id="calculer_decision_passage"><a class="viewcode-back" href="../content/code.html#Projet_SAE_105.calculer_decision_passage">[docs]</a><span class="k">def</span> <span class="nf">calculer_decision_passage</span><span class="p">(</span><span class="n">liste_moyennes_annuelles</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Règles de passage BUT sur les MOYENNES ANNUELLES :</span>
+<span class="sd">    </span>
+<span class="sd">    1. Aucune UE &lt; 8 (Pas de &#39;NON VALIDÉ&#39;)</span>
+<span class="sd">    2. Au moins 2 UE &gt;= 10</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">liste_moyennes_annuelles</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Incomplet&quot;</span><span class="p">,</span> <span class="s2">&quot;decision-fail&quot;</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">note</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">liste_moyennes_annuelles</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;REFUSÉ (UE &lt; 8)&quot;</span><span class="p">,</span> <span class="s2">&quot;decision-fail&quot;</span>
+    
+    <span class="n">nb_ue_validees</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">liste_moyennes_annuelles</span> <span class="k">if</span> <span class="n">note</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">nb_ue_validees</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;ADMIS (Passage BUT2)&quot;</span><span class="p">,</span> <span class="s2">&quot;decision-ok&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;REFUSÉ (Manque UE &gt; 10)&quot;</span><span class="p">,</span> <span class="s2">&quot;decision-fail&quot;</span></div>
+
+
+<span class="c1"># --- PROGRAMME PRINCIPAL (Protégé pour Sphinx) ---</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="c1">#CHEMIN DES FICHIERS EXCEL</span>
+    <span class="n">fichier_de_ref</span> <span class="o">=</span> <span class="s1">&#39;/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/data/coefficients/Coef.xlsx&#39;</span>
+
+    <span class="n">dossiers_notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dossiers_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/data/notes/notes_S1&#39;</span><span class="p">)</span>
+    <span class="n">dossiers_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/data/notes/notes_S2&#39;</span><span class="p">)</span>
+
+    <span class="c1">#INITIALISATION DES TABLEAUX</span>
+    <span class="n">tableau_coef</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">note_matiere</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Gros_Tableau_Notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">notes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Lecture du fichier des coefs  </span>
+    <span class="n">tableau_coef</span> <span class="o">=</span> <span class="n">lecture_du_fichier_coef_dico</span><span class="p">(</span><span class="n">fichier_de_ref</span><span class="p">)</span>
+
+    <span class="c1"># Lecture des fichiers des notes des étudiants</span>
+    <span class="k">for</span> <span class="n">dossier_notes</span> <span class="ow">in</span> <span class="n">dossiers_notes</span><span class="p">:</span>    
+        <span class="k">for</span> <span class="n">fichier</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">dossier_notes</span><span class="p">):</span>
+            <span class="n">Gros_Tableau_Notes</span> <span class="o">=</span> <span class="n">Gros_Tableau_Notes</span> <span class="o">+</span> <span class="n">lire_fichier_excel</span><span class="p">(</span><span class="n">fichier</span> <span class="p">,</span> <span class="n">dossier_notes</span><span class="p">)</span>
+
+    <span class="c1"># liste des UE</span>
+    <span class="n">liste_ue</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;Unité_d_Enseignement&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tableau_coef</span><span class="p">})</span>
+    <span class="n">liste_semestre</span> <span class="o">=</span> <span class="nb">list</span><span class="p">({</span><span class="n">item</span><span class="p">[</span><span class="s2">&quot;Semestre&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">tableau_coef</span><span class="p">})</span>
+
+    <span class="k">for</span> <span class="n">ue</span> <span class="ow">in</span> <span class="n">liste_ue</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">matière</span> <span class="ow">in</span> <span class="n">tableau_coef</span><span class="p">:</span>
+            <span class="n">matiere_ue</span> <span class="o">=</span> <span class="n">matière</span><span class="p">[</span><span class="s2">&quot;Unité_d_Enseignement&quot;</span><span class="p">]</span>
+            <span class="n">matiere_fichier</span> <span class="o">=</span> <span class="n">matière</span><span class="p">[</span><span class="s2">&quot;Fichier&quot;</span><span class="p">]</span>
+            <span class="n">matiere_coef</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">matière</span><span class="p">[</span><span class="s2">&quot;Coefficient&quot;</span><span class="p">])</span>
+            <span class="k">if</span>  <span class="n">matiere_ue</span> <span class="o">==</span> <span class="n">ue</span> <span class="p">:</span>
+                <span class="k">for</span> <span class="n">eleve</span> <span class="ow">in</span> <span class="n">Gros_Tableau_Notes</span><span class="p">:</span>
+                    <span class="n">cle</span> <span class="o">=</span> <span class="p">(</span><span class="n">eleve</span><span class="p">[</span><span class="s2">&quot;Nom&quot;</span><span class="p">],</span> <span class="n">eleve</span><span class="p">[</span><span class="s2">&quot;Prénom&quot;</span><span class="p">],</span><span class="n">ue</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">eleve</span><span class="p">[</span><span class="s2">&quot;Fichier_Matière&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">matière</span><span class="p">[</span><span class="s2">&quot;Fichier&quot;</span><span class="p">]</span> <span class="p">:</span>
+                        <span class="k">if</span> <span class="n">cle</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">:</span>
+                            <span class="n">notes</span><span class="p">[</span><span class="n">cle</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="n">notes</span><span class="p">[</span><span class="n">cle</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">eleve</span><span class="p">[</span><span class="s2">&quot;Note&quot;</span><span class="p">])</span> <span class="o">*</span> <span class="n">matiere_coef</span> <span class="o">/</span> <span class="mi">100</span>
+
+    <span class="n">ues_racines</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">({</span><span class="n">ue</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ue</span> <span class="ow">in</span> <span class="n">liste_ue</span><span class="p">}))</span>
+    <span class="n">etudiants_uniques</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">((</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">notes</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+
+    <span class="c1"># GÉNÉRATION DU HTML </span>
+    <span class="n">html_content</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    &lt;!DOCTYPE html&gt;</span>
+<span class="s2">    &lt;html lang=&quot;fr&quot;&gt;</span>
+<span class="s2">    &lt;head&gt;</span>
+<span class="s2">        &lt;meta charset=&quot;UTF-8&quot;&gt;</span>
+<span class="s2">        &lt;title&gt;BUT1-R&amp;T&lt;/title&gt;</span>
+<span class="s2">        &lt;style&gt;</span>
+<span class="s2">            body{ font-family: &#39;Segoe UI&#39;, sans-serif; padding: 20px; font-size: 13px; }</span>
+<span class="s2">            h2 { text-align: center; color: #333; }</span>
+<span class="s2">            table{ border-collapse: collapse; width: 100%; box-shadow: 0 0 15px rgba(0,0,0,0.1); margin-top: 20px; }</span>
+<span class="s2">            td, th{ border: 1px solid #ddd; padding: 8px 4px; text-align: center; }</span>
+<span class="s2">            thead tr:first-child th { background-color: #005f99; color: white; border-right: 1px solid white; }</span>
+<span class="s2">            thead tr:nth-child(2) th { background-color: #007acc; color: white; font-size: 0.9em; }</span>
+<span class="s2">            .col-semestre { background-color: #fcfcfc; color: #555; }</span>
+<span class="s2">            .col-moyenne { background-color: #fff; font-weight: bold; border-left: 2px solid #ccc; }</span>
+<span class="s2">            .ue-validee { background-color: #d4edda; color: #155724; font-weight: bold; }</span>
+<span class="s2">            .ue-compensee { background-color: #fff3cd; color: #856404; font-weight: bold; }</span>
+<span class="s2">            .ue-echec { background-color: #f8d7da; color: #721c24; font-weight: bold; }</span>
+<span class="s2">            .decision-ok { background-color: #28a745; color: white; font-weight: bold; font-size: 1.1em; }</span>
+<span class="s2">            .decision-fail { background-color: #dc3545; color: white; font-weight: bold; font-size: 1.1em; }</span>
+<span class="s2">            tr:hover { background-color: #f1f1f1; }</span>
+<span class="s2">        &lt;/style&gt;</span>
+<span class="s2">    &lt;/head&gt;</span>
+<span class="s2">    &lt;body&gt;</span>
+<span class="s2">        &lt;h2&gt;Notes BUT1 - R&amp;T &lt;/h2&gt;</span>
+<span class="s2">        &lt;table&gt;</span>
+<span class="s2">        &lt;thead&gt;</span>
+<span class="s2">            &lt;tr&gt;</span>
+<span class="s2">                &lt;th rowspan=&quot;2&quot; style=&quot;width: 150px;&quot;&gt;Étudiant&lt;/th&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">ue</span> <span class="ow">in</span> <span class="n">ues_racines</span><span class="p">:</span>
+        <span class="n">html_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;th colspan=&quot;4&quot;&gt;</span><span class="si">{</span><span class="n">ue</span><span class="si">}</span><span class="s1"> (Annuel)&lt;/th&gt;&#39;</span>
+
+    <span class="n">html_content</span> <span class="o">+=</span> <span class="s1">&#39;&lt;th rowspan=&quot;2&quot;&gt;DÉCISION&lt;/th&gt;&lt;/tr&gt;&#39;</span>
+    <span class="n">html_content</span> <span class="o">+=</span> <span class="s1">&#39;&lt;tr&gt;&#39;</span>
+    <span class="k">for</span> <span class="n">ue</span> <span class="ow">in</span> <span class="n">ues_racines</span><span class="p">:</span>
+        <span class="n">html_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;th&gt;</span><span class="si">{</span><span class="n">ue</span><span class="si">}</span><span class="s1">.1&lt;/th&gt;&lt;th&gt;</span><span class="si">{</span><span class="n">ue</span><span class="si">}</span><span class="s1">.2&lt;/th&gt;&lt;th&gt;Moy&lt;/th&gt;&lt;th&gt;État&lt;/th&gt;&#39;</span>
+    <span class="n">html_content</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&#39;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">nom</span><span class="p">,</span> <span class="n">prenom</span><span class="p">)</span> <span class="ow">in</span> <span class="n">etudiants_uniques</span><span class="p">:</span>
+        <span class="n">moyennes_annuelles_etudiant</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ligne_html_etudiant</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&lt;tr&gt;&lt;td style=&#39;text-align:left; padding-left:10px;&#39;&gt;&lt;b&gt;</span><span class="si">{</span><span class="n">nom</span><span class="si">}</span><span class="s2">&lt;/b&gt; </span><span class="si">{</span><span class="n">prenom</span><span class="si">}</span><span class="s2">&lt;/td&gt;&quot;</span>
+        
+        <span class="k">for</span> <span class="n">racine</span> <span class="ow">in</span> <span class="n">ues_racines</span><span class="p">:</span>
+            <span class="n">nom_ue_s1</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">racine</span><span class="si">}</span><span class="s2">.1&quot;</span>
+            <span class="n">nom_ue_s2</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">racine</span><span class="si">}</span><span class="s2">.2&quot;</span>
+            <span class="n">note_s1</span> <span class="o">=</span> <span class="n">notes</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">nom</span><span class="p">,</span> <span class="n">prenom</span><span class="p">,</span> <span class="n">nom_ue_s1</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">note_s2</span> <span class="o">=</span> <span class="n">notes</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">nom</span><span class="p">,</span> <span class="n">prenom</span><span class="p">,</span> <span class="n">nom_ue_s2</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">moyenne_annuelle</span> <span class="o">=</span> <span class="p">(</span><span class="n">note_s1</span> <span class="o">+</span> <span class="n">note_s2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">moyennes_annuelles_etudiant</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">moyenne_annuelle</span><span class="p">)</span>
+            <span class="n">txt_etat</span><span class="p">,</span> <span class="n">class_etat</span> <span class="o">=</span> <span class="n">determiner_etat_ue</span><span class="p">(</span><span class="n">moyenne_annuelle</span><span class="p">)</span>
+            
+            <span class="n">ligne_html_etudiant</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;td class=&quot;col-semestre&quot;&gt;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">note_s1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/td&gt;&#39;</span>
+            <span class="n">ligne_html_etudiant</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;td class=&quot;col-semestre&quot;&gt;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">note_s2</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/td&gt;&#39;</span>
+            <span class="n">ligne_html_etudiant</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;td class=&quot;col-moyenne&quot;&gt;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">moyenne_annuelle</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&lt;/td&gt;&#39;</span>
+            <span class="n">ligne_html_etudiant</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;td class=&quot;</span><span class="si">{</span><span class="n">class_etat</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">txt_etat</span><span class="si">}</span><span class="s1">&lt;/td&gt;&#39;</span>
+
+        <span class="n">txt_decision</span><span class="p">,</span> <span class="n">class_decision</span> <span class="o">=</span> <span class="n">calculer_decision_passage</span><span class="p">(</span><span class="n">moyennes_annuelles_etudiant</span><span class="p">)</span>
+        <span class="n">ligne_html_etudiant</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&lt;td class=&quot;</span><span class="si">{</span><span class="n">class_decision</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">txt_decision</span><span class="si">}</span><span class="s1">&lt;/td&gt;&lt;/tr&gt;&#39;</span>
+        <span class="n">html_content</span> <span class="o">+=</span> <span class="n">ligne_html_etudiant</span>
+
+    <span class="n">html_content</span> <span class="o">+=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        &lt;/tbody&gt;</span>
+<span class="s2">        &lt;/table&gt;</span>
+<span class="s2">    &lt;/body&gt;</span>
+<span class="s2">    &lt;/html&gt;</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/home/etudiant/.ssh/SAE105_EXCEL_VALIDATION_UE/html/mes_notes.html&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_content</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Le fichier &#39;mes_notes.html&#39; a été généré avec succès.&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EXCEL_CALCUL_UE_PROJET</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../content/cahier_des_charges.html">Cahier des Charges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../content/objectifs.html">Objectifs du Projet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../content/code.html">Documentation du code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Code du module</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, REMI CAMELIO KARIM HANI.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

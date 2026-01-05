@@ -8,10 +8,7 @@ Voici le détail de toutes les fonctions codées :
    :maxdepth: 2
    :caption: Contents:
 
-Documentation du Code
-=====================
+   content/cahier_des_charges
+   content/objectifs
+   content/code
 
-.. automodule:: module1
-   :members:
-   :undoc-members:
-   :show-inheritance:

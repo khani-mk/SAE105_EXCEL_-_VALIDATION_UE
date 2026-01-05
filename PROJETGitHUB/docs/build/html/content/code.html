@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+
+<html lang="french">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Documentation du code &#8212; Documentation EXCEL_CALCUL_UE_PROJET </title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="prev" title="Objectifs du Projet" href="objectifs.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-Projet_SAE_105">
+<span id="documentation-du-code"></span><h1>Documentation du code<a class="headerlink" href="#module-Projet_SAE_105" title="Lien permanent vers cette rubrique">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="Projet_SAE_105.calculer_decision_passage">
+<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">calculer_decision_passage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">liste_moyennes_annuelles</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#calculer_decision_passage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.calculer_decision_passage" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Règles de passage BUT sur les MOYENNES ANNUELLES :</p>
+<ol class="arabic simple">
+<li><p>Aucune UE &lt; 8 (Pas de 'NON VALIDÉ')</p></li>
+<li><p>Au moins 2 UE &gt;= 10</p></li>
+</ol>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Projet_SAE_105.determiner_etat_ue">
+<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">determiner_etat_ue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">note</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#determiner_etat_ue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.determiner_etat_ue" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>Détermine l'état d'une UE selon sa moyenne annuelle.</p>
+<ul class="simple">
+<li><p>Si note &gt;= 10 : VALIDÉ</p></li>
+<li><p>Si note &gt;= 8 : COMPENSABLE</p></li>
+<li><p>Sinon : NON VALIDÉ</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Projet_SAE_105.lecture_du_fichier_coef_dico">
+<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">lecture_du_fichier_coef_dico</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier_coef</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#lecture_du_fichier_coef_dico"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.lecture_du_fichier_coef_dico" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>FONCTION POUR LIRE LE FICHIER EXCEL DES COEFS.</p>
+<p><strong>Explication du code :</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Création d'un tableau vide</strong> pour l'utiliser par la suite.</p></li>
+<li><p><strong>On va aller ouvrir le fichier de refs</strong> (le fichier Excel qui contient les coef).</p></li>
+<li><p><strong>Python lit la première ligne</strong> de mon fichier Excel de ref qui contient les coefs (les entêtes).</p></li>
+<li><p><strong>On va faire une boucle</strong> pour lire les données qui sont dans le fichiers.</p></li>
+<li><p><strong>Le zip</strong> c'est pour dire que 'Matière'(entetes) : 'Maths' (ligne) , 'Coef'(entetes) : 3(ligne).</p></li>
+<li><p><strong>Et on transforme ca en dictionnaire</strong>.</p></li>
+<li><p><strong>Append</strong> : c'est pour rajouter tout ca au tableau.</p></li>
+<li><p><strong>On rempli le tableau</strong> avec nos informations que l'on vient de trouver.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fichier_coef</strong> -- Le chemin du fichier Excel.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Le tableau rempli avec les coefficients.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Projet_SAE_105.lire_fichier_excel">
+<span class="sig-prename descclassname"><span class="pre">Projet_SAE_105.</span></span><span class="sig-name descname"><span class="pre">lire_fichier_excel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fichier</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Dossier_semestre</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/Projet_SAE_105.html#lire_fichier_excel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Projet_SAE_105.lire_fichier_excel" title="Lien permanent vers cette définition">¶</a></dt>
+<dd><p>FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS.</p>
+<p><strong>Explication du code :</strong></p>
+<ol class="arabic simple">
+<li><p><strong>On créer un tableau vide</strong> pour mettre nos valeurs dedans.</p></li>
+<li><p><strong>Fichier_Matière</strong> : c'est pour dire que le nom de la matière c'est son nom (ex : Mathematiques.xlsx).</p></li>
+<li><p><strong>Dossier_semestre</strong> : Meme chose pour le dossier.</p></li>
+<li><p><strong>Fichier_Excel</strong> : c'est pour avoir le chemin complet des fichiers xlsx.</p></li>
+<li><p><strong>[1:4]</strong> : c'est pour dire les collonnes B , C , D.</p></li>
+<li><p><strong>On va lire les données</strong> des fichiers xlsx.</p></li>
+<li><p><strong>On veut la ligne min 2</strong> et on va lire la valeurs qui est dans la case [A2] qui correspond au nombre d'éléves.</p></li>
+<li><p><strong>On fait un dictionnaire</strong> des valeurs des entetes et des lignes qui sont présent dans le fichier.</p></li>
+<li><p><strong>On remplie le tableau</strong> avec les valeurs qu'on vient de trouver.</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fichier</strong> -- Nom du fichier.</p></li>
+<li><p><strong>Dossier_semestre</strong> -- Dossier contenant le fichier.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tableau des notes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">EXCEL_CALCUL_UE_PROJET</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cahier_des_charges.html">Cahier des Charges</a></li>
+<li class="toctree-l1"><a class="reference internal" href="objectifs.html">Objectifs du Projet</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation du code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.calculer_decision_passage"><code class="docutils literal notranslate"><span class="pre">calculer_decision_passage()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.determiner_etat_ue"><code class="docutils literal notranslate"><span class="pre">determiner_etat_ue()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.lecture_du_fichier_coef_dico"><code class="docutils literal notranslate"><span class="pre">lecture_du_fichier_coef_dico()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Projet_SAE_105.lire_fichier_excel"><code class="docutils literal notranslate"><span class="pre">lire_fichier_excel()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="objectifs.html" title="Chapitre précédent">Objectifs du Projet</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2026, REMI CAMELIO KARIM HANI.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/content/code.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
