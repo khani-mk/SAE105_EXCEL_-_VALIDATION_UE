@@ -17,7 +17,7 @@
     <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Recherche" href="../search.html" />
-    <link rel="next" title="Objectifs du Projet" href="objectifs.html" />
+    <link rel="next" title="Objectif du Projet" href="objectifs.html" />
     <link rel="prev" title="Documentation de Validation UE" href="../index.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -37,7 +37,41 @@
             
   <section id="cahier-des-charges">
 <h1>Cahier des Charges<a class="headerlink" href="#cahier-des-charges" title="Lien permanent vers cette rubrique">¶</a></h1>
-<p>Ici , je décrirai le cahier des charges</p>
+<section id="fonctionnalites-attendues">
+<h2>Fonctionnalités Attendues<a class="headerlink" href="#fonctionnalites-attendues" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Le programme doit réaliser les trois étapes suivantes :</p>
+<p>Lecture : Extraire les données pertinentes (notes, noms) depuis plusieurs fichiers Excel (un fichier par matière).,
+Traitement : Calculer les moyennes de chaque Unité d'Enseignement (UE) et déterminer si l'UE est validée.,
+Affichage : Construire une page HTML/CSS présentant les résultats sous forme de tableau.,</p>
+</section>
+<section id="contraintes-techniques">
+<h2>Contraintes Techniques<a class="headerlink" href="#contraintes-techniques" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Langage : Python (version &gt; 3.7).,
+Environnement : Le script doit s'exécuter sous Linux.,
+Versionnage : Le projet doit être géré avec Git et GitHub.,
+Qualité :
+Le code doit être documenté (docstrings).
+Une documentation technique doit être générée avec Sphinx.,
+Des tests unitaires doivent être présents.,
+,
+,</p>
+</section>
+<section id="utilisation-du-programme">
+<h2>Utilisation du Programme<a class="headerlink" href="#utilisation-du-programme" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Le script principal doit pouvoir être lancé en ligne de commande en spécifiant le dossier des notes et le dossier de sortie :</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./nom_projet.py<span class="w"> </span>--files-dir<span class="w"> </span>dir_notes<span class="w"> </span>--output-dir<span class="w"> </span>./../html/
+</pre></div>
+</div>
+</section>
+<section id="structure-des-fichiers">
+<h2>Structure des Fichiers<a class="headerlink" href="#structure-des-fichiers" title="Lien permanent vers cette rubrique">¶</a></h2>
+<p>Le projet doit respecter une arborescence précise, séparant :</p>
+<p>Le code source (nomprojet/),
+Les données (data/),
+La documentation (docs/),
+Le site généré (html/),
+Les tests (tests/)</p>
+</section>
 </section>
 
 
@@ -59,8 +93,14 @@
 <h3>Navigation</h3>
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Cahier des Charges</a></li>
-<li class="toctree-l1"><a class="reference internal" href="objectifs.html">Objectifs du Projet</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cahier des Charges</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#fonctionnalites-attendues">Fonctionnalités Attendues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#contraintes-techniques">Contraintes Techniques</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilisation-du-programme">Utilisation du Programme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structure-des-fichiers">Structure des Fichiers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="objectifs.html">Objectif du Projet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">Documentation du code</a></li>
 </ul>
 
@@ -69,7 +109,7 @@
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
       <li>Previous: <a href="../index.html" title="Chapitre précédent">Documentation de Validation UE</a></li>
-      <li>Next: <a href="objectifs.html" title="Chapitre suivant">Objectifs du Projet</a></li>
+      <li>Next: <a href="objectifs.html" title="Chapitre suivant">Objectif du Projet</a></li>
   </ul></li>
 </ul>
 </div>
