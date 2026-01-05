@@ -35,6 +35,7 @@
   <h1>Code source de module1</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">openpyxl</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">On import les modules openpyxl et os.</span>
@@ -240,16 +241,17 @@
 <span class="sd">    * **On ajoutes toute la ligne HTML de l&#39;étudiant au contenu global**.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     
-    <span class="c1">#CHEMIN DES FICHIERS EXCEL</span>
-    <span class="n">fichier_de_ref</span> <span class="o">=</span> <span class="s1">&#39;/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/coefficients/Coef.xlsx&#39;</span>
+    <span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+    <span class="c1"># 2. On reconstruit les chemins à partir de cette base</span>
+    <span class="c1"># Exemple: dossier actuel / data / coefficients / Coef.xlsx</span>
+    <span class="n">fichier_de_ref</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s1">&#39;coefficients&#39;</span> <span class="o">/</span> <span class="s1">&#39;Coef.xlsx&#39;</span>
 
-    <span class="c1">#On créait un tableau vide pour mettre les données qu&#39;on va vouloir utiliser</span>
     <span class="n">dossiers_notes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dossiers_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s1">&#39;notes&#39;</span> <span class="o">/</span> <span class="s1">&#39;notes_S1&#39;</span><span class="p">)</span>
+    <span class="n">dossiers_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s1">&#39;notes&#39;</span> <span class="o">/</span> <span class="s1">&#39;notes_S2&#39;</span><span class="p">)</span>
     
-    <span class="c1">#Chemin pour accéder au note des S1 et S2</span>
-    <span class="c1">#on met les données qui sont dans le fichier notes_S1 et notes_S2 dans le tableau que l&#39;on vient de créer </span>
-    <span class="n">dossiers_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S1&#39;</span><span class="p">)</span>
-    <span class="n">dossiers_notes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/workspaces/SAE105_EXCEL_-_VALIDATION_UE/data/notes/notes_S2&#39;</span><span class="p">)</span>
+    <span class="c1"># Le fichier de sortie HTML</span>
+    <span class="n">fichier_sortie_html</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s1">&#39;html&#39;</span> <span class="o">/</span> <span class="s1">&#39;mes_notes.html&#39;</span>
 
     <span class="c1">#INITIALISATION DES TABLEAUX</span>
     <span class="n">tableau_coef</span> <span class="o">=</span> <span class="p">[]</span>
@@ -369,7 +371,7 @@
 <span class="s2">    &lt;/html&gt;</span>
 <span class="s2">    &quot;&quot;&quot;</span>
 
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;/workspaces/SAE105_EXCEL_-_VALIDATION_UE/html/mes_notes.html&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fichier_sortie_html</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_content</span><span class="p">)</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Le fichier &#39;mes_notes.html&#39; a été généré avec succès.&quot;</span><span class="p">)</span></div>
