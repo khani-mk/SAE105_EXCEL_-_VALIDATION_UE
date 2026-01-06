@@ -2,32 +2,12 @@ import openpyxl
 import os
 from pathlib import Path
 
-"""
-On import les modules openpyxl et os.
-On va l'utiliser pour ouvrir les fichier xlsx et ainsi les utiliser.
-Il va servir a donner les chemins d'accès pour aller aux différents fichiers que nous allons utiliser.
-"""
+#on va importe les modules openpyxl , os et Path
 
 # --- LES FONCTIONS ---
 
 def lecture_du_fichier_coef_dico(fichier_coef):
-    """
-    FONCTION POUR LIRE LE FICHIER EXCEL DES COEFS.
 
-    **Explication du code :**
-    
-    1. **Création d'un tableau vide** pour l'utiliser par la suite.
-    2. **On va aller ouvrir le fichier de refs** (le fichier Excel qui contient les coef).
-    3. **Python lit la première ligne** de mon fichier Excel de ref qui contient les coefs (les entêtes).
-    4. **On va faire une boucle** pour lire les données qui sont dans le fichiers.
-    5. **Le zip** c'est pour dire que 'Matière'(entetes) : 'Maths' (ligne) , 'Coef'(entetes) : 3(ligne).
-    6. **Et on transforme ca en dictionnaire**.
-    7. **Append** : c'est pour rajouter tout ca au tableau.
-    8. **On rempli le tableau** avec nos informations que l'on vient de trouver.
-
-    :param fichier_coef: Le chemin du fichier Excel.
-    :return: Le tableau rempli avec les coefficients.
-    """
     # Création d'un tableau vide pour l'utiliser par la suite
     tableau_coef = []
     
@@ -55,25 +35,7 @@ def lecture_du_fichier_coef_dico(fichier_coef):
 
 
 def lire_fichier_excel(fichier, Dossier_semestre):
-    """
-    FONCTION POUR LIRE LES FICHIERS EXCEL DES NOTES DES ETUDIANTS.
-
-    **Explication du code :**
-
-    1. **On créer un tableau vide** pour mettre nos valeurs dedans.
-    2. **Fichier_Matière** : c'est pour dire que le nom de la matière c'est son nom (ex : Mathematiques.xlsx).
-    3. **Dossier_semestre** : Meme chose pour le dossier.
-    4. **Fichier_Excel** : c'est pour avoir le chemin complet des fichiers xlsx.
-    5. **[1:4]** : c'est pour dire les collonnes B , C , D.
-    6. **On va lire les données** des fichiers xlsx.
-    7. **On veut la ligne min 2** et on va lire la valeurs qui est dans la case [A2] qui correspond au nombre d'éléves.
-    8. **On fait un dictionnaire** des valeurs des entetes et des lignes qui sont présent dans le fichier.
-    9. **On remplie le tableau** avec les valeurs qu'on vient de trouver.
-
-    :param fichier: Nom du fichier.
-    :param Dossier_semestre: Dossier contenant le fichier.
-    :return: Tableau des notes.
-    """
+   
     # on créer un tableau vide pour mettre nos valeurs dedans
     note_matiere = []
 
@@ -110,13 +72,6 @@ def lire_fichier_excel(fichier, Dossier_semestre):
 
 
 def determiner_etat_ue(note):
-    """
-    Détermine l'état d'une UE selon sa moyenne annuelle.
-    
-    * Si note >= 10 : VALIDÉ
-    * Si note >= 8 : COMPENSABLE
-    * Sinon : NON VALIDÉ
-    """
     if note >= 10:
         return "VALIDÉ", "ue-validee"
     elif note >= 8:
@@ -126,12 +81,6 @@ def determiner_etat_ue(note):
 
 
 def calculer_decision_passage(liste_moyennes_annuelles):
-    """
-    Règles de passage BUT sur les MOYENNES ANNUELLES :
-    
-    1. Aucune UE < 8 (Pas de 'NON VALIDÉ')
-    2. Au moins 2 UE >= 10
-    """
     if not liste_moyennes_annuelles:
         return "Incomplet", "decision-fail"
     if any(note < 8 for note in liste_moyennes_annuelles):
